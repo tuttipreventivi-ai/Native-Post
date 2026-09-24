@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registro del Banco</title>
+<style>
+  :root{
+    --wood-dark: #241812;
+    --wood-mid: #3a2a1e;
+    --wood-panel: #423123;
+    --parchment: #e9dcbb;
+    --parchment-dim: #c9b992;
+    --brass: #c08a2e;
+    --brass-bright: #e0a83f;
+    --ink-red: #7a3428;
+    --ledger-green: #59714a;
+    --line: rgba(233, 220, 187, 0.14);
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin: 0;
+    background: var(--wood-dark);
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(255,255,255,0.03), transparent 40%),
+      radial-gradient(circle at 85% 90%, rgba(255,255,255,0.02), transparent 45%);
+    color: var(--parchment);
+    font-family: Georgia, 'Times New Roman', serif;
+    padding: 28px 16px 120px;
+  }
+
+  .header{
+    max-width: 900px;
+    margin: 0 auto 22px;
+    text-align: left;
+    border-bottom: 2px solid var(--brass);
+    padding-bottom: 14px;
+  }
+
+  .header h1{
+    font-size: 30px;
+    letter-spacing: 0.5px;
+    margin: 0 0 4px;
+    color: var(--brass-bright);
+    font-weight: normal;
+    font-variant: small-caps;
+  }
+
+  .header p{
+    margin: 0;
+    color: var(--parchment-dim);
+    font-size: 14px;
+    font-style: italic;
+  }
+
+  .wrap{
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    gap: 18px;
+  }
+
+  .category{
+    background: var(--wood-panel);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .category-head{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: var(--wood-mid);
+    border-bottom: 1px solid var(--line);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .category-head .arrow{
+    margin-left: auto;
+    color: var(--brass);
+    font-size: 12px;
+    transition: transform 0.2s ease;
+  }
+
+  .category.collapsed .category-head{
+    border-bottom: none;
+  }
+
+  .category.collapsed .arrow{
+    transform: rotate(-90deg);
+  }
+
+  .category-body{
+    overflow: hidden;
+  }
+
+  .category.collapsed .category-body{
+    display: none;
+  }
+
+  .category-head .icon{ font-size: 18px; }
+
+  .category-head h2{
+    font-size: 15px;
+    font-weight: normal;
+    letter-spacing: 0.5px;
+    margin: 0;
+    color: var(--parchment);
+    font-variant: small-caps;
+  }
+
+  .neg-label{
+    text-decoration: underline;
+    text-decoration-color: var(--ink-red);
+    color: var(--ink-red);
+    font-size: 12px;
+    font-variant: normal;
+    letter-spacing: 0;
+  }
+
+  .rows{ padding: 4px 0; }
+
+  .row{
+    display: grid;
+    grid-template-columns: 1fr 70px 90px 90px;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .row:last-child{ border-bottom: none; }
+
+  .item-name{ font-size: 14.5px; }
+  .item-price{
+    font-family: 'Courier New', monospace;
+    color: var(--parchment-dim);
+    font-size: 13px;
+    text-align: right;
+  }
+
+  .qty-input{
+    width: 100%;
+    background: var(--wood-dark);
+    border: 1px solid var(--line);
+    color: var(--parchment);
+    font-family: 'Courier New', monospace;
+    font-size: 15px;
+    text-align: center;
+    padding: 6px 4px;
+    border-radius: 2px;
+  }
+  .qty-input:focus{
+    outline: none;
+    border-color: var(--brass);
+  }
+
+  .row-total{
+    font-family: 'Courier New', monospace;
+    text-align: right;
+    font-size: 14.5px;
+    color: var(--brass-bright);
+    min-width: 70px;
+  }
+
+  .category-subtotal{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 8px 16px;
+    background: rgba(0,0,0,0.15);
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: var(--parchment-dim);
+  }
+
+  .footer-bar{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--wood-dark);
+    border-top: 2px solid var(--brass);
+    padding: 14px 16px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .footer-inner{
+    max-width: 900px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .grand-total{
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .grand-total .label{
+    font-size: 14px;
+    color: var(--parchment-dim);
+    font-variant: small-caps;
+  }
+
+  .grand-total .amount{
+    font-family: 'Courier New', monospace;
+    font-size: 30px;
+    color: var(--brass-bright);
+    font-weight: bold;
+  }
+
+  .reset-btn{
+    background: transparent;
+    border: 1px solid var(--ink-red);
+    color: var(--ink-red);
+    padding: 10px 18px;
+    font-family: Georgia, serif;
+    font-size: 14px;
+    font-variant: small-caps;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .reset-btn:hover{
+    background: var(--ink-red);
+    color: var(--parchment);
+  }
+
+  @media (max-width: 480px){
+    .row{
+      grid-template-columns: 1fr 55px 70px 70px;
+      gap: 6px;
+      padding: 8px 12px;
+    }
+    .item-name{ font-size: 13px; }
+    .header h1{ font-size: 24px; }
+    .grand-total .amount{ font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Registro del Banco</h1>
+  <p>Inserisci le quantità portate dal cliente — il totale si aggiorna da solo</p>
+</div>
+
+<div class="wrap" id="categories"></div>
+
+<div class="footer-bar">
+  <div class="footer-inner">
+    <button class="reset-btn" onclick="resetAll()">Svuota registro</button>
+    <div class="grand-total">
+      <span class="label">Totale dovuto</span>
+      <span class="amount" id="grandTotal">$0.00</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const data = [
+  { name: "SEMI", icon: "🌱", items: [
+    { n: "Semi di Papavero", p: 0.03 },
+    { n: "Semi di Salvia del Deserto", p: 0.03 },
+    { n: "Fiore Cardinale", p: 0.03 },
+    { n: "Millefoglie Comune", p: 0.03 },
+    { n: "Glicine", p: 0.03 },
+    { n: "Aloe", p: 0.03 },
+    { n: "Foglie di Coca", p: 0.03 },
+    { n: "Himenoxis Odorata", p: 0.03 },
+    { n: "Lampone Rosso", p: 0.03 },
+    { n: "Ribes Nero", p: 0.03 },
+    { n: "More", p: 0.03 },
+    { n: "Lupino del Texas", p: 0.03 },
+    { n: "Papavero", p: 0.03 },
+  ]},
+
+  { name: "CIMELI", icon: "🏺", items: [
+    { n: "Maschere", p: 1.00 },
+    { n: "Chanupa", p: 2.00 },
+    { n: "Copricapo Cerimoniale", p: 2.50 },
+    { n: "Tomahawk", p: 1.50 },
+  ]},
+
+  { name: "Emporio", icon: "🏛️", negative: true, items: [
+    { n: "Sigari", p: 0.90 },
+    { n: "Sigarettes", p: 0.60 },
+    { n: "Acqua di Tabacco", p: 2.00 },
+    { n: "Decotto di Stramonio", p: 25.00 },
+    { n: "Arco Normale", p: 25.00 },
+    { n: "Arco Nativo", p: 90.00 },
+    { n: "Frecce", p: 0.10 },
+    { n: "Canoe", p: 80.00 },
+    { n: "Erbe Varie", p: 0.08 },
+    { n: "Legna Normale", p: 0.10 },
+    { n: "Legna Pregiata", p: 0.10 },
+    { n: "Fibra", p: 0.08 },
+    { n: "Ferro", p: 0.10 },
+    { n: "Piombo", p: 0.10 },
+    { n: "Acciaio", p: 0.10 },
+    { n: "Zolfo", p: 0.10 },
+    { n: "Rame", p: 0.10 },
+  ]},
+];
+
+const container = document.getElementById("categories");
+
+data.forEach((cat, ci) => {
+  const catDiv = document.createElement("div");
+  catDiv.className = "category collapsed";
+
+  const head = document.createElement("div");
+  head.className = "category-head";
+  const negLabel = cat.negative ? ` <span class="neg-label">— vendita, importo negativo</span>` : "";
+  head.innerHTML = `<span class="icon">${cat.icon}</span><h2>${cat.name}${negLabel}</h2><span class="arrow">▼</span>`;
+  head.onclick = () => catDiv.classList.toggle("collapsed");
+  catDiv.appendChild(head);
+
+  const body = document.createElement("div");
+  body.className = "category-body";
+
+  const rows = document.createElement("div");
+  rows.className = "rows";
+
+  cat.items.forEach((item, ii) => {
+    const row = document.createElement("div");
+    row.className = "row";
+    const id = `qty-${ci}-${ii}`;
+    row.innerHTML = `
+      <span class="item-name">${item.n}</span>
+      <span class="item-price">${item.tierQty ? `$${item.p.toFixed(2)}/$${item.tierPrice.toFixed(2)}<br>-${item.tierQty}+` : `$${item.p.toFixed(2)}`}</span>
+      <input type="number" min="0" step="1" value="" placeholder="0" class="qty-input" id="${id}" oninput="calculate()">
+      <span class="row-total" id="total-${ci}-${ii}">$0.00</span>
+    `;
+    rows.appendChild(row);
+  });
+
+  body.appendChild(rows);
+
+  const subtotal = document.createElement("div");
+  subtotal.className = "category-subtotal";
+  subtotal.innerHTML = `Subtotale: <span id="subtotal-${ci}">$0.00</span>`;
+  body.appendChild(subtotal);
+
+  catDiv.appendChild(body);
+
+  container.appendChild(catDiv);
+});
+
+function calculate(){
+  let grand = 0;
+  data.forEach((cat, ci) => {
+    let subtotal = 0;
+    const sign = cat.negative ? -1 : 1;
+    cat.items.forEach((item, ii) => {
+      const input = document.getElementById(`qty-${ci}-${ii}`);
+      const qty = parseFloat(input.value) || 0;
+      let rowValue;
+      if (item.tierQty && qty >= item.tierQty){
+        rowValue = qty * item.tierPrice;
+      } else {
+        rowValue = qty * item.p;
+      }
+      const rowTotal = sign * rowValue;
+      document.getElementById(`total-${ci}-${ii}`).textContent = `${rowTotal < 0 ? "-" : ""}$${Math.abs(rowTotal).toFixed(2)}`;
+      subtotal += rowTotal;
+    });
+    document.getElementById(`subtotal-${ci}`).textContent = `${subtotal < 0 ? "-" : ""}$${Math.abs(subtotal).toFixed(2)}`;
+    grand += subtotal;
+  });
+  document.getElementById("grandTotal").textContent = `${grand < 0 ? "-" : ""}$${Math.abs(grand).toFixed(2)}`;
+}
+
+function resetAll(){
+  document.querySelectorAll(".qty-input").forEach(input => input.value = "");
+  calculate();
+}
+
+calculate();
+</script>
+
+</body>
+</html>
