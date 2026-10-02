@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Registro del Banco</title>
-<style>
+<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Registro del Banco</title><style>
   :root{
     --wood-dark: #241812;
     --wood-mid: #3a2a1e;
@@ -244,44 +238,30 @@
     .item-name{ font-size: 13px; }
     .header h1{ font-size: 24px; }
     .grand-total .amount{ font-size: 24px; }
-  }
-</style>
-</head>
-<body>
-
-<div class="header">
+  }</style></head><body><div class="header">
   <h1>Registro del Banco</h1>
-  <p>Inserisci le quantità portate dal cliente — il totale si aggiorna da solo</p>
-</div>
-
-<div class="wrap" id="categories"></div>
-
-<div class="footer-bar">
+  <p>Inserisci le quantità portate dal cliente — il totale si aggiorna da solo</p></div><div class="wrap" id="categories"></div><div class="footer-bar">
   <div class="footer-inner">
     <button class="reset-btn" onclick="resetAll()">Svuota registro</button>
     <div class="grand-total">
       <span class="label">Totale dovuto</span>
       <span class="amount" id="grandTotal">$0.00</span>
     </div>
-  </div>
-</div>
-
-<script>
-const data = [
+  </div></div><script>const data = [
   { name: "SEMI", icon: "🌱", items: [
-    { n: "Semi di Papavero", p: 0.03 },
-    { n: "Semi di Salvia del Deserto", p: 0.03 },
-    { n: "Fiore Cardinale", p: 0.03 },
-    { n: "Millefoglie Comune", p: 0.03 },
-    { n: "Glicine", p: 0.03 },
-    { n: "Aloe", p: 0.03 },
-    { n: "Foglie di Coca", p: 0.03 },
-    { n: "Himenoxis Odorata", p: 0.03 },
-    { n: "Lampone Rosso", p: 0.03 },
-    { n: "Ribes Nero", p: 0.03 },
-    { n: "More", p: 0.03 },
-    { n: "Lupino del Texas", p: 0.03 },
-    { n: "Papavero", p: 0.03 },
+    { n: "Semi di Papavero", p: 0.04 },
+    { n: "Semi di Salvia del Deserto", p: 0.04 },
+    { n: "Fiore Cardinale", p: 0.04 },
+    { n: "Millefoglie Comune", p: 0.04 },
+    { n: "Glicine", p: 0.04 },
+    { n: "Aloe", p: 0.04 },
+    { n: "Foglie di Coca", p: 0.04 },
+    { n: "Himenoxis Odorata", p: 0.04 },
+    { n: "Lampone Rosso", p: 0.04 },
+    { n: "Ribes Nero", p: 0.04 },
+    { n: "More", p: 0.04 },
+    { n: "Lupino del Texas", p: 0.04 },
+    { n: "Papavero", p: 0.04 },
   ]},
 
   { name: "CIMELI", icon: "🏺", items: [
@@ -291,7 +271,7 @@ const data = [
     { n: "Tomahawk", p: 1.50 },
   ]},
 
-  { name: "Emporio", icon: "🏛️", negative: true, items: [
+  { name: "Emporio", icon: "🏛️️", negative: true, items: [
     { n: "Sigari", p: 0.90 },
     { n: "Sigarettes", p: 0.60 },
     { n: "Acqua di Tabacco", p: 2.50 },
@@ -311,9 +291,7 @@ const data = [
     { n: "Zolfo", p: 0.10 },
     { n: "Rame", p: 0.10 },
   ]},
-];
-
-const container = document.getElementById("categories");
+];const container = document.getElementById("categories");
 
 data.forEach((cat, ci) => {
   const catDiv = document.createElement("div");
@@ -355,9 +333,7 @@ data.forEach((cat, ci) => {
   catDiv.appendChild(body);
 
   container.appendChild(catDiv);
-});
-
-function calculate(){
+});function calculate(){
   let grand = 0;
   data.forEach((cat, ci) => {
     let subtotal = 0;
@@ -379,15 +355,9 @@ function calculate(){
     grand += subtotal;
   });
   document.getElementById("grandTotal").textContent = `${grand < 0 ? "-" : ""}$${Math.abs(grand).toFixed(2)}`;
-}
-
-function resetAll(){
+}function resetAll(){
   document.querySelectorAll(".qty-input").forEach(input => input.value = "");
   calculate();
 }
 
-calculate();
-</script>
-
-</body>
-</html>
+calculate();</script></body></html>
