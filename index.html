@@ -125,23 +125,28 @@
 
     .rows{ padding: 4px 0; }
 
+    .item-group {
+      border-bottom: 1px solid var(--line);
+      padding: 6px 16px;
+    }
+    .item-group:last-child { border-bottom: none; }
+
     .row{
       display: grid;
-      grid-template-columns: 1fr 90px 130px 90px;
+      grid-template-columns: 1fr 100px 90px 90px;
       align-items: center;
       gap: 10px;
-      padding: 9px 16px;
-      border-bottom: 1px solid var(--line);
+      padding: 4px 0;
     }
-    .row:last-child{ border-bottom: none; }
 
-    .item-name{ font-size: 14.5px; }
-    .item-price{
-      font-family: 'Courier New', monospace;
-      color: var(--parchment-dim);
-      font-size: 13px;
-      text-align: right;
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
     }
+
+    .item-name{ font-size: 14.5px; font-weight: bold; color: var(--parchment); }
 
     .price-input, .qty-input{
       width: 100%;
@@ -149,50 +154,15 @@
       border: 1px solid var(--line);
       color: var(--parchment);
       font-family: 'Courier New', monospace;
-      font-size: 15px;
+      font-size: 14px;
       text-align: center;
-      padding: 6px 4px;
+      padding: 5px 4px;
       border-radius: 2px;
     }
+    
     .price-input:focus, .qty-input:focus{
       outline: none;
       border-color: var(--brass);
-    }
-
-    .price-input-wrap{
-      display: flex;
-      align-items: center;
-      gap: 2px;
-      color: var(--parchment-dim);
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-    }
-
-    .qty-cell{
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .add-qty-btn{
-      background: var(--wood-mid);
-      border: 1px solid var(--brass);
-      color: var(--brass-bright);
-      font-size: 13px;
-      font-weight: bold;
-      width: 26px;
-      height: 31px;
-      line-height: 29px;
-      text-align: center;
-      border-radius: 2px;
-      cursor: pointer;
-      padding: 0;
-      flex-shrink: 0;
-      transition: background 0.15s, color 0.15s;
-    }
-    .add-qty-btn:hover{
-      background: var(--brass);
-      color: var(--wood-dark);
     }
 
     .row-total{
@@ -201,6 +171,28 @@
       font-size: 14.5px;
       color: var(--brass-bright);
       min-width: 70px;
+    }
+
+    .add-qty-btn {
+      background: transparent;
+      border: 1px dashed var(--brass);
+      color: var(--brass-bright);
+      font-size: 11px;
+      padding: 2px 8px;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+    .add-qty-btn:hover {
+      background: rgba(192, 138, 46, 0.2);
+    }
+
+    .remove-qty-btn {
+      background: transparent;
+      border: none;
+      color: var(--ink-red);
+      font-size: 14px;
+      cursor: pointer;
+      padding: 0 4px;
     }
 
     .category-subtotal{
@@ -273,9 +265,8 @@
 
     @media (max-width: 480px){
       .row{
-        grid-template-columns: 1fr 65px 105px 65px;
+        grid-template-columns: 1fr 80px 65px 65px;
         gap: 6px;
-        padding: 8px 12px;
       }
       .item-name{ font-size: 13px; }
       .header h1{ font-size: 24px; }
@@ -287,7 +278,7 @@
 
   <div class="header">
     <h1>Registro del Banco</h1>
-    <p>Inserisci le quantità portate dal cliente — il totale si aggiorna da solo</p>
+    <p>Inserisci le quantità portate dal cliente — i prezzi sono modificabili ed il totale si aggiorna da solo</p>
   </div>
 
   <div class="wrap" id="categories"></div>
@@ -320,7 +311,7 @@ const data = [
     { n: "Papavero", p: 0.04 },
   ]},
 
-  { name: "CIMELI", icon: "🏺", multiAdd: true, items: [
+  { name: "CIMELI", icon: "🏺", allowMultiple: true, items: [
     { n: "Maschere", p: 1.00 },
     { n: "Chanupa", p: 2.00 },
     { n: "Copricapo Cerimoniale", p: 2.50 },
@@ -342,14 +333,14 @@ const data = [
     { n: "Torce", p: 8.00 },
     { n: "Zaino Nativo", p: 55.00 },
     { n: "Erbe Varie", p: 0.08 },
-    { n: "Legna Normale", p: 0.10, editablePrice: true },
-    { n: "Legna Pregiata", p: 0.12, editablePrice: true },
-    { n: "Fibra", p: 0.08, editablePrice: true },
-    { n: "Ferro", p: 0.10, editablePrice: true },
-    { n: "Piombo", p: 0.10, editablePrice: true },
-    { n: "Acciaio", p: 0.10, editablePrice: true },
-    { n: "Zolfo", p: 0.10, editablePrice: true },
-    { n: "Rame", p: 0.10, editablePrice: true },
+    { n: "Legna Normale", p: 0.10 },
+    { n: "Legna Pregiata", p: 0.12 },
+    { n: "Fibra", p: 0.08 },
+    { n: "Ferro", p: 0.10 },
+    { n: "Piombo", p: 0.10 },
+    { n: "Acciaio", p: 0.10 },
+    { n: "Zolfo", p: 0.10 },
+    { n: "Rame", p: 0.10 },
   ]},
 ];
 
@@ -373,41 +364,25 @@ data.forEach((cat, ci) => {
   rows.className = "rows";
 
   cat.items.forEach((item, ii) => {
-    const row = document.createElement("div");
-    row.className = "row";
-    const idQty = `qty-${ci}-${ii}`;
-    const idPrice = `price-${ci}-${ii}`;
+    const itemGroup = document.createElement("div");
+    itemGroup.className = "item-group";
 
-    let priceHTML;
-    if (item.editablePrice) {
-      priceHTML = `
-        <div class="price-input-wrap">
-          $ <input type="number" step="0.01" min="0" value="${item.p}" class="price-input" id="${idPrice}" oninput="calculate()">
-        </div>
-      `;
-    } else {
-      priceHTML = `<span class="item-price">$${item.p.toFixed(2)}</span>`;
-    }
-
-    let qtyCellHTML;
-    if (cat.multiAdd) {
-      qtyCellHTML = `
-        <div class="qty-cell">
-          <input type="number" min="0" step="1" value="" placeholder="0" class="qty-input" id="${idQty}" oninput="calculate()">
-          <button type="button" class="add-qty-btn" title="Aggiungi quantità consegnata" onclick="appendQty('${idQty}')">+</button>
-        </div>
-      `;
-    } else {
-      qtyCellHTML = `<input type="number" min="0" step="1" value="" placeholder="0" class="qty-input" id="${idQty}" oninput="calculate()">`;
-    }
-
-    row.innerHTML = `
+    const itemHeader = document.createElement("div");
+    itemHeader.className = "item-header";
+    itemHeader.innerHTML = `
       <span class="item-name">${item.n}</span>
-      ${priceHTML}
-      ${qtyCellHTML}
-      <span class="row-total" id="total-${ci}-${ii}">$0.00</span>
+      ${cat.allowMultiple ? `<button type="button" class="add-qty-btn" onclick="addQtyRow(${ci},${ii})">+ Aggiungi lotto</button>` : ''}
     `;
-    rows.appendChild(row);
+    itemGroup.appendChild(itemHeader);
+
+    const qtyContainer = document.createElement("div");
+    qtyContainer.id = `qty-container-${ci}-${ii}`;
+
+    // Riga iniziale
+    qtyContainer.appendChild(createRowElement(ci, ii, item.p, true));
+    itemGroup.appendChild(qtyContainer);
+
+    rows.appendChild(itemGroup);
   });
 
   body.appendChild(rows);
@@ -421,53 +396,63 @@ data.forEach((cat, ci) => {
   container.appendChild(catDiv);
 });
 
-function appendQty(inputId) {
-  const input = document.getElementById(inputId);
-  if (!input) return;
+function createRowElement(ci, ii, defaultPrice, isFirst = false) {
+  const row = document.createElement("div");
+  row.className = "row qty-row";
 
-  const addVal = prompt("Inserisci la quantità aggiuntiva da sommare:");
-  if (addVal !== null && addVal.trim() !== "") {
-    const parsedAdd = parseFloat(addVal);
-    if (!isNaN(parsedAdd) && parsedAdd > 0) {
-      const currentVal = parseFloat(input.value) || 0;
-      input.value = currentVal + parsedAdd;
-      calculate();
-    }
-  }
+  row.innerHTML = `
+    <span style="font-size:12px; color:var(--parchment-dim);">${isFirst ? 'Prezzo / Qtà:' : ''}</span>
+    <input type="number" step="0.01" min="0" value="${defaultPrice.toFixed(2)}" class="price-input" oninput="calculate()">
+    <input type="number" min="0" step="1" value="" placeholder="0" class="qty-input" oninput="calculate()">
+    <div style="display:flex; align-items:center; justify-content:flex-end; gap:4px;">
+      <span class="row-total">$0.00</span>
+      ${!isFirst ? `<button type="button" class="remove-qty-btn" onclick="removeQtyRow(this)">✕</button>` : '<span style="width:16px;"></span>'}
+    </div>
+  `;
+  return row;
+}
+
+function addQtyRow(ci, ii) {
+  const container = document.getElementById(`qty-container-${ci}-${ii}`);
+  const defaultPrice = data[ci].items[ii].p;
+  container.appendChild(createRowElement(ci, ii, defaultPrice, false));
+  calculate();
+}
+
+function removeQtyRow(btn) {
+  const row = btn.closest(".row");
+  row.remove();
+  calculate();
 }
 
 function calculate(){
   let grand = 0;
+
   data.forEach((cat, ci) => {
     let subtotal = 0;
     const sign = cat.negative ? -1 : 1;
+
     cat.items.forEach((item, ii) => {
-      const qtyInput = document.getElementById(`qty-${ci}-${ii}`);
-      const priceInput = document.getElementById(`price-${ci}-${ii}`);
+      const container = document.getElementById(`qty-container-${ci}-${ii}`);
+      const rows = container.querySelectorAll(".qty-row");
 
-      const qty = parseFloat(qtyInput ? qtyInput.value : 0) || 0;
+      rows.forEach(row => {
+        const priceInput = row.querySelector(".price-input");
+        const qtyInput = row.querySelector(".qty-input");
+        const totalSpan = row.querySelector(".row-total");
 
-      let unitPrice = item.p;
-      if (item.editablePrice && priceInput) {
-        unitPrice = parseFloat(priceInput.value) || 0;
-      }
+        const price = parseFloat(priceInput.value) || 0;
+        const qty = parseFloat(qtyInput.value) || 0;
 
-      const rowValue = qty * unitPrice;
-      const rowTotal = sign * rowValue;
+        const rowValue = qty * price;
+        const rowTotal = sign * rowValue;
 
-      const totalEl = document.getElementById(`total-${ci}-${ii}`);
-      if (totalEl) {
-        totalEl.textContent = `${rowTotal < 0 ? "-" : ""}$${Math.abs(rowTotal).toFixed(2)}`;
-      }
-
-      subtotal += rowTotal;
+        totalSpan.textContent = `${rowTotal < 0 ? "-" : ""}$${Math.abs(rowTotal).toFixed(2)}`;
+        subtotal += rowTotal;
+      });
     });
 
-    const subtotalEl = document.getElementById(`subtotal-${ci}`);
-    if (subtotalEl) {
-      subtotalEl.textContent = `${subtotal < 0 ? "-" : ""}$${Math.abs(subtotal).toFixed(2)}`;
-    }
-
+    document.getElementById(`subtotal-${ci}`).textContent = `${subtotal < 0 ? "-" : ""}$${Math.abs(subtotal).toFixed(2)}`;
     grand += subtotal;
   });
 
