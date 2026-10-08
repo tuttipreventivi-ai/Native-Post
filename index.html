@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
+<!DOCTYPE html><html lang="it"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registro del Banco</title>
@@ -272,9 +270,7 @@
       .header h1{ font-size: 24px; }
       .grand-total .amount{ font-size: 24px; }
     }
-  </style>
-</head>
-<body>
+  </style></head><body>
 
   <div class="header">
     <h1>Registro del Banco</h1>
@@ -291,10 +287,7 @@
         <span class="amount" id="grandTotal">$0.00</span>
       </div>
     </div>
-  </div>
-
-<script>
-const data = [
+  </div><script>const data = [
   { name: "SEMI", icon: "🌱", items: [
     { n: "Semi di Papavero", p: 0.04 },
     { n: "Semi di Salvia del Deserto", p: 0.04 },
@@ -311,6 +304,29 @@ const data = [
     { n: "Papavero", p: 0.04 },
   ]},
 
+  { name: "MINERALI E ERBE", icon: "⛏️", items: [
+    { n: "Ferro", p: 0.10 },
+    { n: "Piombo", p: 0.10 },
+    { n: "Acciaio", p: 0.10 },
+    { n: "Zolfo", p: 0.10 },
+    { n: "Rame", p: 0.10 },
+    { n: "Erbe Varie", p: 0.08 },
+  ]},
+
+  { name: "LEGNAME", icon: "🪵", items: [
+    { n: "Legna Normale", p: 0.10 },
+    { n: "Legna Pregiata", p: 0.12 },
+    { n: "Fibra", p: 0.08 },
+  ]},
+
+  { name: "MANUFATTI NATIVI", icon: "🏹", items: [
+    { n: "Arco Nativo", p: 90.00 },
+    { n: "Zaino Nativo", p: 55.00 },
+    { n: "Frecce", p: 0.10 },
+    { n: "Canoe", p: 120.00 },
+    { n: "Torce", p: 8.00 },
+  ]},
+
   { name: "CIMELI", icon: "🏺", allowMultiple: true, items: [
     { n: "Maschere", p: 1.00 },
     { n: "Chanupa", p: 2.00 },
@@ -320,31 +336,22 @@ const data = [
     { n: "Amuleto", p: 7.00 },
   ]},
 
+  { name: "CIBI NATIVI", icon: "🍲", items: [
+    { n: "Stufato di Cacciagione", p: 3.50 },
+    { n: "Wojapi", p: 4.00 },
+    { n: "Pane di Wojapi", p: 4.00 },
+    { n: "Pane Fritto", p: 2.50 },
+    { n: "Acqua di Tabacco", p: 2.50 },
+    { n: "Decotto di Stramonio", p: 25.00 },
+  ]},
+
   { name: "Emporio", icon: "🏛", negative: true, items: [
     { n: "Sigari", p: 0.90 },
     { n: "Sigarettes", p: 0.60 },
-    { n: "Acqua di Tabacco", p: 2.50 },
-    { n: "Decotto di Stramonio", p: 25.00 },
     { n: "Arco Normale", p: 25.00 },
-    { n: "Arco Nativo", p: 90.00 },
-    { n: "Frecce", p: 0.10 },
-    { n: "Canoe", p: 120.00 },
     { n: "Piedi di Porco", p: 1.00 },
-    { n: "Torce", p: 8.00 },
-    { n: "Zaino Nativo", p: 55.00 },
-    { n: "Erbe Varie", p: 0.08 },
-    { n: "Legna Normale", p: 0.10 },
-    { n: "Legna Pregiata", p: 0.12 },
-    { n: "Fibra", p: 0.08 },
-    { n: "Ferro", p: 0.10 },
-    { n: "Piombo", p: 0.10 },
-    { n: "Acciaio", p: 0.10 },
-    { n: "Zolfo", p: 0.10 },
-    { n: "Rame", p: 0.10 },
   ]},
-];
-
-const container = document.getElementById("categories");
+];const container = document.getElementById("categories");
 
 data.forEach((cat, ci) => {
   const catDiv = document.createElement("div");
@@ -394,9 +401,7 @@ data.forEach((cat, ci) => {
 
   catDiv.appendChild(body);
   container.appendChild(catDiv);
-});
-
-function createRowElement(ci, ii, defaultPrice, isFirst = false) {
+});function createRowElement(ci, ii, defaultPrice, isFirst = false) {
   const row = document.createElement("div");
   row.className = "row qty-row";
 
@@ -410,22 +415,16 @@ function createRowElement(ci, ii, defaultPrice, isFirst = false) {
     </div>
   `;
   return row;
-}
-
-function addQtyRow(ci, ii) {
+}function addQtyRow(ci, ii) {
   const container = document.getElementById(`qty-container-${ci}-${ii}`);
   const defaultPrice = data[ci].items[ii].p;
   container.appendChild(createRowElement(ci, ii, defaultPrice, false));
   calculate();
-}
-
-function removeQtyRow(btn) {
+}function removeQtyRow(btn) {
   const row = btn.closest(".row");
   row.remove();
   calculate();
-}
-
-function calculate(){
+}function calculate(){
   let grand = 0;
 
   data.forEach((cat, ci) => {
@@ -457,14 +456,9 @@ function calculate(){
   });
 
   document.getElementById("grandTotal").textContent = `${grand < 0 ? "-" : ""}$${Math.abs(grand).toFixed(2)}`;
-}
-
-function resetAll(){
+}function resetAll(){
   document.querySelectorAll(".qty-input").forEach(input => input.value = "");
   calculate();
 }
 
-calculate();
-</script>
-</body>
-</html>
+calculate();</script></body></html>
