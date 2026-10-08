@@ -3,24 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro del Banco</title>
+  <title>The Wooden Ledger</title>
   <style>
-    :root{
-      --wood-dark: #241812;
-      --wood-mid: #3a2a1e;
-      --wood-panel: #423123;
-      --parchment: #e9dcbb;
-      --parchment-dim: #c9b992;
+    :root {
+      --wood-dark: #1e140c;
+      --wood-panel: #2a1c12;
+      --wood-mid: #382618;
+      --parchment: #e8d8c3;
+      --parchment-dim: #a89882;
       --brass: #c08a2e;
-      --brass-bright: #e0a83f;
-      --ink-red: #7a3428;
-      --ledger-green: #59714a;
-      --line: rgba(233, 220, 187, 0.14);
+      --brass-bright: #e5b352;
+      --line: #4a3423;
+      --ink-red: #a83232;
     }
 
-    *{ box-sizing: border-box; }
+    * { box-sizing: border-box; }
 
-    body{
+    body {
       margin: 0;
       background: var(--wood-dark);
       background-image:
@@ -31,7 +30,7 @@
       padding: 28px 16px 120px;
     }
 
-    .header{
+    .header {
       max-width: 900px;
       margin: 0 auto 22px;
       text-align: left;
@@ -39,7 +38,7 @@
       padding-bottom: 14px;
     }
 
-    .header h1{
+    .header h1 {
       font-size: 30px;
       letter-spacing: 0.5px;
       margin: 0 0 4px;
@@ -48,28 +47,28 @@
       font-variant: small-caps;
     }
 
-    .header p{
+    .header p {
       margin: 0;
       color: var(--parchment-dim);
       font-size: 14px;
       font-style: italic;
     }
 
-    .wrap{
+    .wrap {
       max-width: 900px;
       margin: 0 auto;
       display: grid;
       gap: 18px;
     }
 
-    .category{
+    .category {
       background: var(--wood-panel);
       border: 1px solid var(--line);
       border-radius: 3px;
       overflow: hidden;
     }
 
-    .category-head{
+    .category-head {
       display: flex;
       align-items: center;
       gap: 10px;
@@ -80,32 +79,20 @@
       user-select: none;
     }
 
-    .category-head .arrow{
+    .category-head .arrow {
       margin-left: auto;
       color: var(--brass);
       font-size: 12px;
       transition: transform 0.2s ease;
     }
 
-    .category.collapsed .category-head{
-      border-bottom: none;
-    }
+    .category.collapsed .category-head { border-bottom: none; }
+    .category.collapsed .arrow { transform: rotate(-90deg); }
+    .category-body { overflow: hidden; }
+    .category.collapsed .category-body { display: none; }
+    .category-head .icon { font-size: 18px; }
 
-    .category.collapsed .arrow{
-      transform: rotate(-90deg);
-    }
-
-    .category-body{
-      overflow: hidden;
-    }
-
-    .category.collapsed .category-body{
-      display: none;
-    }
-
-    .category-head .icon{ font-size: 18px; }
-
-    .category-head h2{
+    .category-head h2 {
       font-size: 15px;
       font-weight: normal;
       letter-spacing: 0.5px;
@@ -114,16 +101,7 @@
       font-variant: small-caps;
     }
 
-    .neg-label{
-      text-decoration: underline;
-      text-decoration-color: var(--ink-red);
-      color: var(--ink-red);
-      font-size: 12px;
-      font-variant: normal;
-      letter-spacing: 0;
-    }
-
-    .rows{ padding: 4px 0; }
+    .rows { padding: 4px 0; }
 
     .item-group {
       border-bottom: 1px solid var(--line);
@@ -131,7 +109,7 @@
     }
     .item-group:last-child { border-bottom: none; }
 
-    .row{
+    .row {
       display: grid;
       grid-template-columns: 1fr 100px 90px 90px;
       align-items: center;
@@ -139,16 +117,9 @@
       padding: 4px 0;
     }
 
-    .item-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 4px;
-    }
+    .item-name { font-size: 14.5px; font-weight: bold; color: var(--parchment); }
 
-    .item-name{ font-size: 14.5px; font-weight: bold; color: var(--parchment); }
-
-    .price-input, .qty-input{
+    .price-input, .qty-input {
       width: 100%;
       background: var(--wood-dark);
       border: 1px solid var(--line);
@@ -159,13 +130,13 @@
       padding: 5px 4px;
       border-radius: 2px;
     }
-    
-    .price-input:focus, .qty-input:focus{
+
+    .price-input:focus, .qty-input:focus {
       outline: none;
       border-color: var(--brass);
     }
 
-    .row-total{
+    .row-total {
       font-family: 'Courier New', monospace;
       text-align: right;
       font-size: 14.5px;
@@ -173,29 +144,7 @@
       min-width: 70px;
     }
 
-    .add-qty-btn {
-      background: transparent;
-      border: 1px dashed var(--brass);
-      color: var(--brass-bright);
-      font-size: 11px;
-      padding: 2px 8px;
-      cursor: pointer;
-      border-radius: 2px;
-    }
-    .add-qty-btn:hover {
-      background: rgba(192, 138, 46, 0.2);
-    }
-
-    .remove-qty-btn {
-      background: transparent;
-      border: none;
-      color: var(--ink-red);
-      font-size: 14px;
-      cursor: pointer;
-      padding: 0 4px;
-    }
-
-    .category-subtotal{
+    .category-subtotal {
       display: flex;
       justify-content: flex-end;
       gap: 10px;
@@ -206,7 +155,7 @@
       color: var(--parchment-dim);
     }
 
-    .footer-bar{
+    .footer-bar {
       position: fixed;
       bottom: 0;
       left: 0;
@@ -218,7 +167,7 @@
       justify-content: center;
     }
 
-    .footer-inner{
+    .footer-inner {
       max-width: 900px;
       width: 100%;
       display: flex;
@@ -227,26 +176,26 @@
       gap: 16px;
     }
 
-    .grand-total{
+    .grand-total {
       display: flex;
       align-items: baseline;
       gap: 10px;
     }
 
-    .grand-total .label{
+    .grand-total .label {
       font-size: 14px;
       color: var(--parchment-dim);
       font-variant: small-caps;
     }
 
-    .grand-total .amount{
+    .grand-total .amount {
       font-family: 'Courier New', monospace;
       font-size: 30px;
       color: var(--brass-bright);
       font-weight: bold;
     }
 
-    .reset-btn{
+    .reset-btn {
       background: transparent;
       border: 1px solid var(--ink-red);
       color: var(--ink-red);
@@ -258,213 +207,126 @@
       cursor: pointer;
       transition: background 0.15s, color 0.15s;
     }
-    .reset-btn:hover{
+    .reset-btn:hover {
       background: var(--ink-red);
       color: var(--parchment);
     }
 
-    @media (max-width: 480px){
-      .row{
+    @media (max-width: 480px) {
+      .row {
         grid-template-columns: 1fr 80px 65px 65px;
         gap: 6px;
       }
-      .item-name{ font-size: 13px; }
-      .header h1{ font-size: 24px; }
-      .grand-total .amount{ font-size: 24px; }
+      .item-name { font-size: 13px; }
+      .header h1 { font-size: 24px; }
+      .grand-total .amount { font-size: 24px; }
     }
   </style>
 </head>
 <body>
 
   <div class="header">
-    <h1>Registro del Banco</h1>
-    <p>Inserisci le quantità portate dal cliente — i prezzi sono modificabili ed il totale si aggiorna da solo</p>
+    <h1>The Wooden Ledger</h1>
+    <p>Registro Prezzi e Inventario</p>
   </div>
 
-  <div class="wrap" id="categories"></div>
+  <div class="wrap">
+
+    <!-- SOTTOSEZIONE: CIBI NATIVI -->
+    <div class="category">
+      <div class="category-head" onclick="toggleCategory(this)">
+        <span class="icon">🍲</span>
+        <h2>CIBI NATIVI</h2>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="category-body">
+        <div class="rows">
+          <div class="item-group"><div class="row"><span class="item-name">Stufato di Cacciagione</span><input type="text" class="price-input" value="4$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+          <div class="item-group"><div class="row"><span class="item-name">Wojapi</span><input type="text" class="price-input" value="3$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+          <div class="item-group"><div class="row"><span class="item-name">Pane Fritto</span><input type="text" class="price-input" value="2,0$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+          <div class="item-group"><div class="row"><span class="item-name">Pane Wojapi</span><input type="text" class="price-input" value="4$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+          <div class="item-group"><div class="row"><span class="item-name">Peyote</span><input type="text" class="price-input" value="0$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+          <div class="item-group"><div class="row"><span class="item-name">Decotto di Stramonio</span><input type="text" class="price-input" value="0$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+          <div class="item-group"><div class="row"><span class="item-name">Acqua di Tabacco</span><input type="text" class="price-input" value="0$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOTTOSEZIONE: MINERALI E ERBE -->
+    <div class="category">
+      <div class="category-head" onclick="toggleCategory(this)">
+        <span class="icon">🌿</span>
+        <h2>MINERALI E ERBE</h2>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="category-body">
+        <div class="rows">
+          <div class="item-group"><div class="row"><span class="item-name">Erbe Varie</span><input type="text" class="price-input" value="0$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+          <div class="item-group"><div class="row"><span class="item-name">Ferro</span><input type="text" class="price-input" value="0$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+          <div class="item-group"><div class="row"><span class="item-name">Piombo</span><input type="text" class="price-input" value="0$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+          <div class="item-group"><div class="row"><span class="item-name">Acciaio</span><input type="text" class="price-input" value="0$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+          <div class="item-group"><div class="row"><span class="item-name">Zolfo</span><input type="text" class="price-input" value="0$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+          <div class="item-group"><div class="row"><span class="item-name">Rame</span><input type="text" class="price-input" value="0$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOTTOSEZIONE: GEMME -->
+    <div class="category">
+      <div class="category-head" onclick="toggleCategory(this)">
+        <span class="icon">💎</span>
+        <h2>GEMME</h2>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="category-body">
+        <div class="rows">
+          <div class="item-group"><div class="row"><span class="item-name">Rubino Grezzo</span><input type="text" class="price-input" value="0,64$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+          <div class="item-group"><div class="row"><span class="item-name">Acquamarina Grezza</span><input type="text" class="price-input" value="0,80$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+          <div class="item-group"><div class="row"><span class="item-name">Zaffiro Grezzo</span><input type="text" class="price-input" value="0,92$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+          <div class="item-group"><div class="row"><span class="item-name">Giada Grezza</span><input type="text" class="price-input" value="1,04$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOTTOSEZIONE: LEGNAME -->
+    <div class="category">
+      <div class="category-head" onclick="toggleCategory(this)">
+        <span class="icon">🪵</span>
+        <h2>LEGNAME</h2>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="category-body">
+        <div class="rows">
+          <div class="item-group"><div class="row"><span class="item-name">Legna Normale</span><input type="text" class="price-input" value="0$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+          <div class="item-group"><div class="row"><span class="item-name">Legna Pregiata</span><input type="text" class="price-input" value="0$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+          <div class="item-group"><div class="row"><span class="item-name">Fibra</span><input type="text" class="price-input" value="0$" /><input type="number" class="qty-input" value="0" min="0" /><span class="row-total">$0.00</span></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
   <div class="footer-bar">
     <div class="footer-inner">
-      <button class="reset-btn" onclick="resetAll()">Svuota registro</button>
       <div class="grand-total">
-        <span class="label">Totale dovuto</span>
+        <span class="label">Totale complessivo:</span>
         <span class="amount" id="grandTotal">$0.00</span>
       </div>
+      <button class="reset-btn" onclick="resetForm()">Azzera</button>
     </div>
   </div>
 
-<script>
-const data = [
-  { name: "SEMI", icon: "🌱", items: [
-    { n: "Semi di Papavero", p: 0.04 },
-    { n: "Semi di Salvia del Deserto", p: 0.04 },
-    { n: "Fiore Cardinale", p: 0.04 },
-    { n: "Millefoglie Comune", p: 0.04 },
-    { n: "Glicine", p: 0.04 },
-    { n: "Aloe", p: 0.04 },
-    { n: "Foglie di Coca", p: 0.04 },
-    { n: "Himenoxis Odorata", p: 0.04 },
-    { n: "Lampone Rosso", p: 0.04 },
-    { n: "Ribes Nero", p: 0.04 },
-    { n: "More", p: 0.04 },
-    { n: "Lupino del Texas", p: 0.04 },
-    { n: "Papavero", p: 0.04 },
-  ]},
+  <script>
+    function toggleCategory(header) {
+      const category = header.parentElement;
+      category.classList.toggle('collapsed');
+    }
 
-  { name: "CIMELI", icon: "🏺", allowMultiple: true, items: [
-    { n: "Maschere", p: 1.00 },
-    { n: "Chanupa", p: 2.00 },
-    { n: "Copricapo Cerimoniale", p: 2.50 },
-    { n: "Tomahawk", p: 1.50 },
-    { n: "Acchiappasogni", p: 10.00 },
-    { n: "Amuleto", p: 7.00 },
-  ]},
-
-  { name: "Emporio", icon: "🏛", negative: true, items: [
-    { n: "Sigari", p: 0.90 },
-    { n: "Sigarettes", p: 0.60 },
-    { n: "Acqua di Tabacco", p: 2.50 },
-    { n: "Decotto di Stramonio", p: 25.00 },
-    { n: "Arco Normale", p: 25.00 },
-    { n: "Arco Nativo", p: 90.00 },
-    { n: "Frecce", p: 0.10 },
-    { n: "Canoe", p: 120.00 },
-    { n: "Piedi di Porco", p: 1.00 },
-    { n: "Torce", p: 8.00 },
-    { n: "Zaino Nativo", p: 55.00 },
-    { n: "Erbe Varie", p: 0.08 },
-    { n: "Legna Normale", p: 0.10 },
-    { n: "Legna Pregiata", p: 0.12 },
-    { n: "Fibra", p: 0.08 },
-    { n: "Ferro", p: 0.10 },
-    { n: "Piombo", p: 0.10 },
-    { n: "Acciaio", p: 0.10 },
-    { n: "Zolfo", p: 0.10 },
-    { n: "Rame", p: 0.10 },
-  ]},
-];
-
-const container = document.getElementById("categories");
-
-data.forEach((cat, ci) => {
-  const catDiv = document.createElement("div");
-  catDiv.className = "category collapsed";
-
-  const head = document.createElement("div");
-  head.className = "category-head";
-  const negLabel = cat.negative ? ` <span class="neg-label">— vendita, importo negativo</span>` : "";
-  head.innerHTML = `<span class="icon">${cat.icon}</span><h2>${cat.name}${negLabel}</h2><span class="arrow">▼</span>`;
-  head.onclick = () => catDiv.classList.toggle("collapsed");
-  catDiv.appendChild(head);
-
-  const body = document.createElement("div");
-  body.className = "category-body";
-
-  const rows = document.createElement("div");
-  rows.className = "rows";
-
-  cat.items.forEach((item, ii) => {
-    const itemGroup = document.createElement("div");
-    itemGroup.className = "item-group";
-
-    const itemHeader = document.createElement("div");
-    itemHeader.className = "item-header";
-    itemHeader.innerHTML = `
-      <span class="item-name">${item.n}</span>
-      ${cat.allowMultiple ? `<button type="button" class="add-qty-btn" onclick="addQtyRow(${ci},${ii})">+ Aggiungi lotto</button>` : ''}
-    `;
-    itemGroup.appendChild(itemHeader);
-
-    const qtyContainer = document.createElement("div");
-    qtyContainer.id = `qty-container-${ci}-${ii}`;
-
-    // Riga iniziale
-    qtyContainer.appendChild(createRowElement(ci, ii, item.p, true));
-    itemGroup.appendChild(qtyContainer);
-
-    rows.appendChild(itemGroup);
-  });
-
-  body.appendChild(rows);
-
-  const subtotal = document.createElement("div");
-  subtotal.className = "category-subtotal";
-  subtotal.innerHTML = `Subtotale: <span id="subtotal-${ci}">$0.00</span>`;
-  body.appendChild(subtotal);
-
-  catDiv.appendChild(body);
-  container.appendChild(catDiv);
-});
-
-function createRowElement(ci, ii, defaultPrice, isFirst = false) {
-  const row = document.createElement("div");
-  row.className = "row qty-row";
-
-  row.innerHTML = `
-    <span style="font-size:12px; color:var(--parchment-dim);">${isFirst ? 'Prezzo / Qtà:' : ''}</span>
-    <input type="number" step="0.01" min="0" value="${defaultPrice.toFixed(2)}" class="price-input" oninput="calculate()">
-    <input type="number" min="0" step="1" value="" placeholder="0" class="qty-input" oninput="calculate()">
-    <div style="display:flex; align-items:center; justify-content:flex-end; gap:4px;">
-      <span class="row-total">$0.00</span>
-      ${!isFirst ? `<button type="button" class="remove-qty-btn" onclick="removeQtyRow(this)">✕</button>` : '<span style="width:16px;"></span>'}
-    </div>
-  `;
-  return row;
-}
-
-function addQtyRow(ci, ii) {
-  const container = document.getElementById(`qty-container-${ci}-${ii}`);
-  const defaultPrice = data[ci].items[ii].p;
-  container.appendChild(createRowElement(ci, ii, defaultPrice, false));
-  calculate();
-}
-
-function removeQtyRow(btn) {
-  const row = btn.closest(".row");
-  row.remove();
-  calculate();
-}
-
-function calculate(){
-  let grand = 0;
-
-  data.forEach((cat, ci) => {
-    let subtotal = 0;
-    const sign = cat.negative ? -1 : 1;
-
-    cat.items.forEach((item, ii) => {
-      const container = document.getElementById(`qty-container-${ci}-${ii}`);
-      const rows = container.querySelectorAll(".qty-row");
-
-      rows.forEach(row => {
-        const priceInput = row.querySelector(".price-input");
-        const qtyInput = row.querySelector(".qty-input");
-        const totalSpan = row.querySelector(".row-total");
-
-        const price = parseFloat(priceInput.value) || 0;
-        const qty = parseFloat(qtyInput.value) || 0;
-
-        const rowValue = qty * price;
-        const rowTotal = sign * rowValue;
-
-        totalSpan.textContent = `${rowTotal < 0 ? "-" : ""}$${Math.abs(rowTotal).toFixed(2)}`;
-        subtotal += rowTotal;
-      });
-    });
-
-    document.getElementById(`subtotal-${ci}`).textContent = `${subtotal < 0 ? "-" : ""}$${Math.abs(subtotal).toFixed(2)}`;
-    grand += subtotal;
-  });
-
-  document.getElementById("grandTotal").textContent = `${grand < 0 ? "-" : ""}$${Math.abs(grand).toFixed(2)}`;
-}
-
-function resetAll(){
-  document.querySelectorAll(".qty-input").forEach(input => input.value = "");
-  calculate();
-}
-
-calculate();
-</script>
+    function resetForm() {
+      document.querySelectorAll('.qty-input').forEach(input => input.value = 0);
+      document.querySelectorAll('.row-total').forEach(el => el.textContent = '$0.00');
+      document.getElementById('grandTotal').textContent = '$0.00';
+    }
+  </script>
 </body>
 </html>
