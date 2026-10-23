@@ -1,5 +1,7 @@
 
-<!DOCTYPE html><html lang="it"><head>
+<!DOCTYPE html>
+<html lang="it">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registro del Banco</title>
@@ -271,7 +273,9 @@
       .header h1{ font-size: 24px; }
       .grand-total .amount{ font-size: 24px; }
     }
-  </style></head><body>
+  </style>
+</head>
+<body>
 
   <div class="header">
     <h1>Registro del Banco</h1>
@@ -288,191 +292,213 @@
         <span class="amount" id="grandTotal">$0.00</span>
       </div>
     </div>
-  </div><script>const data = [
-  { name: "SEMI", icon: "🌱", items: [
-    { n: "Semi di Papavero", p: 0.04 },
-    { n: "Semi di Salvia del Deserto", p: 0.04 },
-    { n: "Fiore Cardinale", p: 0.04 },
-    { n: "Millefoglie Comune", p: 0.04 },
-    { n: "Glicine", p: 0.04 },
-    { n: "Aloe", p: 0.04 },
-    { n: "Foglie di Coca", p: 0.04 },
-    { n: "Himenoxis Odorata", p: 0.04 },
-    { n: "Lampone Rosso", p: 0.04 },
-    { n: "Ribes Nero", p: 0.04 },
-    { n: "More", p: 0.04 },
-    { n: "Lupino del Texas", p: 0.04 },
-    { n: "Papavero", p: 0.04 },
-  ]},
+  </div>
 
-  { name: "MINERALI E ERBE", icon: "⛏️", items: [
-    { n: "Ferro", p: 0.10 },
-    { n: "Piombo", p: 0.10 },
-    { n: "Acciaio", p: 0.10 },
-    { n: "Zolfo", p: 0.10 },
-    { n: "Rame", p: 0.10 },
-    { n: "Erbe Varie", p: 0.08 },
-  ]},
+  <script>
+    const data = [
+      { name: "SEMI", icon: "🌱", items: [
+        { n: "Semi di Papavero", p: 0.04 },
+        { n: "Semi di Salvia del Deserto", p: 0.04 },
+        { n: "Fiore Cardinale", p: 0.04 },
+        { n: "Millefoglie Comune", p: 0.04 },
+        { n: "Glicine", p: 0.04 },
+        { n: "Aloe", p: 0.04 },
+        { n: "Foglie di Coca", p: 0.04 },
+        { n: "Himenoxis Odorata", p: 0.04 },
+        { n: "Lampone Rosso", p: 0.04 },
+        { n: "Ribes Nero", p: 0.04 },
+        { n: "More", p: 0.04 },
+        { n: "Lupino del Texas", p: 0.04 },
+        { n: "Papavero", p: 0.04 },
+      ]},
 
-  { name: "LEGNAME", icon: "🪵", items: [
-    { n: "Legna Normale", p: 0.10 },
-    { n: "Legna Pregiata", p: 0.12 },
-    { n: "Fibra", p: 0.08 },
-  ]},
+      { name: "MINERALI E ERBE", icon: "⛏️", items: [
+        { n: "Ferro", p: 0.10 },
+        { n: "Piombo", p: 0.10 },
+        { n: "Acciaio", p: 0.10 },
+        { n: "Zolfo", p: 0.10 },
+        { n: "Rame", p: 0.10 },
+        { n: "Erbe Varie", p: 0.08 },
+      ]},
 
-  { name: "MANUFATTI NATIVI", icon: "🏹", items: [
-    { n: "Arco Nativo", p: 90.00 },
-    { n: "Arco Normale", p: 25.00 },
-    { n: "Zaino in Vimini", p: 50.00 },
-    { n: "Zaino in Pelle", p: 60.00 },
-    { n: "Frecce", p: 0.10 },
-    { n: "Frecce Scolatrici", p: 0.50 },
-    { n: "Frecce Avvelenate", p: 1.10 },
-    { n: "Munizioni da Lancio", p: 3.00 },
-    { n: "Bolas", p: 50.00 },
-    { n: "Canoe", p: 120.00 },
-    { n: "Torce", p: 5.00 },
-    { n: "Fuoco da Campo Avanzato", p: 15.00 },
-  ]},
+      { name: "LEGNAME", icon: "🪵", items: [
+        { n: "Legna Normale", p: 0.10 },
+        { n: "Legna Pregiata", p: 0.12 },
+        { n: "Fibra", p: 0.08 },
+      ]},
 
-  { name: "CIMELI", icon: "🏺", allowMultiple: true, items: [
-    { n: "Maschere", p: 1.00 },
-    { n: "Chanupa", p: 2.00 },
-    { n: "Copricapo Cerimoniale", p: 2.50 },
-    { n: "Tomahawk", p: 1.50 },
-    { n: "Acchiappasogni", p: 10.00 },
-    { n: "Amuleto", p: 7.00 },
-  ]},
+      { name: "MANUFATTI NATIVI", icon: "🏹", items: [
+        { n: "Arco Nativo", p: 90.00 },
+        { n: "Arco Normale", p: 25.00 },
+        { n: "Arco Migliorato", p: 80.00 },
+        { n: "Zaino in Vimini", p: 50.00 },
+        { n: "Zaino in Pelle", p: 60.00 },
+        { n: "Frecce", p: 0.08 },
+        { n: "Frecce Scolatrici", p: 0.50 },
+        { n: "Frecce Avvelenate", p: 1.10 },
+        { n: "Munizioni da Lancio", p: 3.00 },
+        { n: "Bolas", p: 50.00 },
+        { n: "Bolas Hawkmoth", p: 65.00 },
+        { n: "Canoe", p: 120.00 },
+        { n: "Torce", p: 5.00 },
+        { n: "Fuoco da Campo Avanzato", p: 15.00 },
+      ]},
 
-  { name: "CIBI NATIVI", icon: "🍲", items: [
-    { n: "Stufato di Cacciagione", p: 3.00 },
-    { n: "Wojapi", p: 3.00 },
-    { n: "Pane di Wojapi", p: 2.50 },
-    { n: "Pane Fritto", p: 2.50 },
-    { n: "Acqua di Tabacco", p: 2.50 },
-    { n: "Decotto di Stramonio", p: 25.00 },
-  ]},
+      { name: "CIMELI", icon: "🏺", allowMultiple: true, items: [
+        { n: "Maschere", p: 1.00 },
+        { n: "Chanupa", p: 2.00 },
+        { n: "Copricapo Cerimoniale", p: 2.50 },
+        { n: "Tomahawk", p: 1.50 },
+        { n: "Acchiappasogni", p: 10.00 },
+        { n: "Amuleto", p: 7.00 },
+      ]},
 
-  { name: "Emporio", icon: "🏛", negative: true, items: [
-    { n: "Sigari", p: 0.90 },
-    { n: "Sigarettes", p: 0.60 },
-    { n: "Piedi di Porco", p: 1.00 },
-    { n: "Fuoco da Campo", p: 3.00 },
-    { n: "Sedia di Legno", p: 4.00 },
-    { n: "Sedia", p: 3.00 },
-    { n: "Staccionata", p: 4.00 },
-    { n: "Medicina per Animali", p: 2.50 },
-    { n: "Cassa Piccola", p: 90.00 },
-    { n: "Baule Grande", p: 150.00 },
-  ]},
-];const container = document.getElementById("categories");
+      { name: "CIBI NATIVI", icon: "🍲", items: [
+        { n: "Stufato di Cacciagione", p: 3.00 },
+        { n: "Wojapi", p: 1.50 },
+        { n: "Pane di Wojapi", p: 2.50 },
+        { n: "Pane Fritto", p: 2.50 },
+        { n: "Acqua di Tabacco", p: 2.50 },
+        { n: "Decotto di Stramonio", p: 25.00 },
+      ]},
 
-data.forEach((cat, ci) => {
-  const catDiv = document.createElement("div");
-  catDiv.className = "category collapsed";
+      { name: "Emporio", icon: "🏛", negative: true, items: [
+        { n: "Sigari", p: 0.90 },
+        { n: "Sigarettes", p: 0.70 },
+        { n: "Piedi di Porco", p: 1.00 },
+        { n: "Fuoco da Campo", p: 1.00 },
+        { n: "Fuoco da Campo Grande", p: 2.00 },
+        { n: "Fuoco da Campo Avanzato", p: 15.00 },
+        { n: "Sedia di Legno", p: 4.00 },
+        { n: "Sedia", p: 3.00 },
+        { n: "Staccionata", p: 4.00 },
+        { n: "Medicina per Animali", p: 2.50 },
+        { n: "Cassa Piccola", p: 90.00 },
+        { n: "Baule Grande", p: 150.00 },
+      ]},
+    ];
 
-  const head = document.createElement("div");
-  head.className = "category-head";
-  const negLabel = cat.negative ? ` <span class="neg-label">— vendita, importo negativo</span>` : "";
-  head.innerHTML = `<span class="icon">${cat.icon}</span><h2>${cat.name}${negLabel}</h2><span class="arrow">▼</span>`;
-  head.onclick = () => catDiv.classList.toggle("collapsed");
-  catDiv.appendChild(head);
+    const container = document.getElementById("categories");
 
-  const body = document.createElement("div");
-  body.className = "category-body";
+    data.forEach((cat, ci) => {
+      const catDiv = document.createElement("div");
+      catDiv.className = "category collapsed";
 
-  const rows = document.createElement("div");
-  rows.className = "rows";
+      const head = document.createElement("div");
+      head.className = "category-head";
+      const negLabel = cat.negative ? ` <span class="neg-label">— vendita, importo negativo</span>` : "";
+      head.innerHTML = `<span class="icon">${cat.icon}</span><h2>${cat.name}${negLabel}</h2><span class="arrow">▼</span>`;
+      head.onclick = () => catDiv.classList.toggle("collapsed");
+      catDiv.appendChild(head);
 
-  cat.items.forEach((item, ii) => {
-    const itemGroup = document.createElement("div");
-    itemGroup.className = "item-group";
+      const body = document.createElement("div");
+      body.className = "category-body";
 
-    const itemHeader = document.createElement("div");
-    itemHeader.className = "item-header";
-    itemHeader.innerHTML = `
-      <span class="item-name">${item.n}</span>
-      ${cat.allowMultiple ? `<button type="button" class="add-qty-btn" onclick="addQtyRow(${ci},${ii})">+ Aggiungi lotto</button>` : ''}
-    `;
-    itemGroup.appendChild(itemHeader);
+      const rows = document.createElement("div");
+      rows.className = "rows";
 
-    const qtyContainer = document.createElement("div");
-    qtyContainer.id = `qty-container-${ci}-${ii}`;
+      cat.items.forEach((item, ii) => {
+        const itemGroup = document.createElement("div");
+        itemGroup.className = "item-group";
 
-    // Riga iniziale
-    qtyContainer.appendChild(createRowElement(ci, ii, item.p, true));
-    itemGroup.appendChild(qtyContainer);
+        const itemHeader = document.createElement("div");
+        itemHeader.className = "item-header";
+        itemHeader.innerHTML = `
+          <span class="item-name">${item.n}</span>
+          ${cat.allowMultiple ? `<button type="button" class="add-qty-btn" onclick="addQtyRow(${ci},${ii})">+ Aggiungi lotto</button>` : ''}
+        `;
+        itemGroup.appendChild(itemHeader);
 
-    rows.appendChild(itemGroup);
-  });
+        const qtyContainer = document.createElement("div");
+        qtyContainer.id = `qty-container-${ci}-${ii}`;
 
-  body.appendChild(rows);
+        // Riga iniziale
+        qtyContainer.appendChild(createRowElement(ci, ii, item.p, true));
+        itemGroup.appendChild(qtyContainer);
 
-  const subtotal = document.createElement("div");
-  subtotal.className = "category-subtotal";
-  subtotal.innerHTML = `Subtotale: <span id="subtotal-${ci}">$0.00</span>`;
-  body.appendChild(subtotal);
-
-  catDiv.appendChild(body);
-  container.appendChild(catDiv);
-});function createRowElement(ci, ii, defaultPrice, isFirst = false) {
-  const row = document.createElement("div");
-  row.className = "row qty-row";
-
-  row.innerHTML = `
-    <span style="font-size:12px; color:var(--parchment-dim);">${isFirst ? 'Prezzo / Qtà:' : ''}</span>
-    <input type="number" step="0.01" min="0" value="${defaultPrice.toFixed(2)}" class="price-input" oninput="calculate()">
-    <input type="number" min="0" step="1" value="" placeholder="0" class="qty-input" oninput="calculate()">
-    <div style="display:flex; align-items:center; justify-content:flex-end; gap:4px;">
-      <span class="row-total">$0.00</span>
-      ${!isFirst ? `<button type="button" class="remove-qty-btn" onclick="removeQtyRow(this)">✕</button>` : '<span style="width:16px;"></span>'}
-    </div>
-  `;
-  return row;
-}function addQtyRow(ci, ii) {
-  const container = document.getElementById(`qty-container-${ci}-${ii}`);
-  const defaultPrice = data[ci].items[ii].p;
-  container.appendChild(createRowElement(ci, ii, defaultPrice, false));
-  calculate();
-}function removeQtyRow(btn) {
-  const row = btn.closest(".row");
-  row.remove();
-  calculate();
-}function calculate(){
-  let grand = 0;
-
-  data.forEach((cat, ci) => {
-    let subtotal = 0;
-    const sign = cat.negative ? -1 : 1;
-
-    cat.items.forEach((item, ii) => {
-      const container = document.getElementById(`qty-container-${ci}-${ii}`);
-      const rows = container.querySelectorAll(".qty-row");
-
-      rows.forEach(row => {
-        const priceInput = row.querySelector(".price-input");
-        const qtyInput = row.querySelector(".qty-input");
-        const totalSpan = row.querySelector(".row-total");
-
-        const price = parseFloat(priceInput.value) || 0;
-        const qty = parseFloat(qtyInput.value) || 0;
-
-        const rowValue = qty * price;
-        const rowTotal = sign * rowValue;
-
-        totalSpan.textContent = `${rowTotal < 0 ? "-" : ""}$${Math.abs(rowTotal).toFixed(2)}`;
-        subtotal += rowTotal;
+        rows.appendChild(itemGroup);
       });
+
+      body.appendChild(rows);
+
+      const subtotal = document.createElement("div");
+      subtotal.className = "category-subtotal";
+      subtotal.innerHTML = `Subtotale: <span id="subtotal-${ci}">$0.00</span>`;
+      body.appendChild(subtotal);
+
+      catDiv.appendChild(body);
+      container.appendChild(catDiv);
     });
 
-    document.getElementById(`subtotal-${ci}`).textContent = `${subtotal < 0 ? "-" : ""}$${Math.abs(subtotal).toFixed(2)}`;
-    grand += subtotal;
-  });
+    function createRowElement(ci, ii, defaultPrice, isFirst = false) {
+      const row = document.createElement("div");
+      row.className = "row qty-row";
 
-  document.getElementById("grandTotal").textContent = `${grand < 0 ? "-" : ""}$${Math.abs(grand).toFixed(2)}`;
-}function resetAll(){
-  document.querySelectorAll(".qty-input").forEach(input => input.value = "");
-  calculate();
-}
+      row.innerHTML = `
+        <span style="font-size:12px; color:var(--parchment-dim);">${isFirst ? 'Prezzo / Qtà:' : ''}</span>
+        <input type="number" step="0.01" min="0" value="${defaultPrice.toFixed(2)}" class="price-input" oninput="calculate()">
+        <input type="number" min="0" step="1" value="" placeholder="0" class="qty-input" oninput="calculate()">
+        <div style="display:flex; align-items:center; justify-content:flex-end; gap:4px;">
+          <span class="row-total">$0.00</span>
+          ${!isFirst ? `<button type="button" class="remove-qty-btn" onclick="removeQtyRow(this)">✕</button>` : '<span style="width:16px;"></span>'}
+        </div>
+      `;
+      return row;
+    }
 
-calculate();</script></body></html>
+    function addQtyRow(ci, ii) {
+      const container = document.getElementById(`qty-container-${ci}-${ii}`);
+      const defaultPrice = data[ci].items[ii].p;
+      container.appendChild(createRowElement(ci, ii, defaultPrice, false));
+      calculate();
+    }
+
+    function removeQtyRow(btn) {
+      const row = btn.closest(".row");
+      row.remove();
+      calculate();
+    }
+
+    function calculate(){
+      let grand = 0;
+
+      data.forEach((cat, ci) => {
+        let subtotal = 0;
+        const sign = cat.negative ? -1 : 1;
+
+        cat.items.forEach((item, ii) => {
+          const container = document.getElementById(`qty-container-${ci}-${ii}`);
+          const rows = container.querySelectorAll(".qty-row");
+
+          rows.forEach(row => {
+            const priceInput = row.querySelector(".price-input");
+            const qtyInput = row.querySelector(".qty-input");
+            const totalSpan = row.querySelector(".row-total");
+
+            const price = parseFloat(priceInput.value) || 0;
+            const qty = parseFloat(qtyInput.value) || 0;
+
+            const rowValue = qty * price;
+            const rowTotal = sign * rowValue;
+
+            totalSpan.textContent = `${rowTotal < 0 ? "-" : ""}$${Math.abs(rowTotal).toFixed(2)}`;
+            subtotal += rowTotal;
+          });
+        });
+
+        document.getElementById(`subtotal-${ci}`).textContent = `${subtotal < 0 ? "-" : ""}$${Math.abs(subtotal).toFixed(2)}`;
+        grand += subtotal;
+      });
+
+      document.getElementById("grandTotal").textContent = `${grand < 0 ? "-" : ""}$${Math.abs(grand).toFixed(2)}`;
+    }
+
+    function resetAll(){
+      document.querySelectorAll(".qty-input").forEach(input => input.value = "");
+      calculate();
+    }
+
+    calculate();
+  </script>
+</body>
+</html>
