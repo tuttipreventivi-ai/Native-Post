@@ -1,4 +1,4 @@
-      <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
@@ -13,8 +13,8 @@
       --parchment-dim: #c9b992;
       --brass: #c08a2e;
       --brass-bright: #e0a83f;
-      --ink-red: #a84335;
-      --ink-green: #6c935c;
+      --ink-red: #7a3428;
+      --ledger-green: #59714a;
       --line: rgba(233, 220, 187, 0.14);
     }
 
@@ -114,23 +114,22 @@
       font-variant: small-caps;
     }
 
-    .cat-type-label{
-      font-size: 12px;
-      font-variant: normal;
-      letter-spacing: 0;
-      margin-left: 4px;
-    }
-
-    .cat-type-label.negative{
+    .neg-label{
       text-decoration: underline;
       text-decoration-color: var(--ink-red);
       color: var(--ink-red);
+      font-size: 12px;
+      font-variant: normal;
+      letter-spacing: 0;
     }
 
-    .cat-type-label.positive{
+    .pos-label{
       text-decoration: underline;
-      text-decoration-color: var(--ink-green);
-      color: var(--ink-green);
+      text-decoration-color: var(--ledger-green);
+      color: var(--ledger-green);
+      font-size: 12px;
+      font-variant: normal;
+      letter-spacing: 0;
     }
 
     .rows{ padding: 4px 0; }
@@ -321,15 +320,6 @@
         { n: "Papavero", p: 0.04 },
       ]},
 
-      { name: "PRODOTTI ILLEGALI", icon: "☠️", negative: false, items: [
-        { n: "Carne di Wapiti", p: 1.10 },
-        { n: "Corna di Alce", p: 1.10 },
-        { n: "Carne di Bisonte", p: 1.10 },
-        { n: "Pelle di Wapiti", p: 2.20 },
-        { n: "Piuma d'Aquila", p: 3.30 },
-        { n: "Becco d'Aquila", p: 5.50 },
-      ]},
-
       { name: "CIMELI", icon: "🏺", negative: false, allowMultiple: true, items: [
         { n: "Maschere", p: 1.00 },
         { n: "Chanupa", p: 2.00 },
@@ -337,6 +327,15 @@
         { n: "Tomahawk", p: 1.50 },
         { n: "Acchiappasogni", p: 10.00 },
         { n: "Amuleto", p: 7.00 },
+      ]},
+
+      { name: "PRODOTTI ILLEGALI", icon: "☠️", negative: false, items: [
+        { n: "Carne di Wapiti", p: 1.10 },
+        { n: "Corna di Alce", p: 1.10 },
+        { n: "Carne di Bisonte", p: 1.10 },
+        { n: "Pelle di Wapiti", p: 2.20 },
+        { n: "Piuma d'Aquila", p: 3.30 },
+        { n: "Becco d'Aquila", p: 5.50 },
       ]},
 
       { name: "MINERALI E ERBE", icon: "⛏️", negative: true, items: [
@@ -380,7 +379,7 @@
         { n: "Decotto di Stramonio", p: 25.00 },
       ]},
 
-      { name: "EMPORIO", icon: "🏛", negative: true, items: [
+      { name: "Emporio", icon: "🏛", negative: true, items: [
         { n: "Sigari", p: 0.90 },
         { n: "Sigarettes", p: 0.70 },
         { n: "Piedi di Porco", p: 1.00 },
@@ -404,11 +403,11 @@
 
       const head = document.createElement("div");
       head.className = "category-head";
-      const typeLabel = cat.negative 
-        ? ` <span class="cat-type-label negative">— vendita, importo negativo</span>` 
-        : ` <span class="cat-type-label positive">— acquisto, importo positivo</span>`;
+      const labelHtml = cat.negative 
+        ? ` <span class="neg-label">— vendita, importo negativo</span>` 
+        : ` <span class="pos-label">— acquisto, importo positivo</span>`;
       
-      head.innerHTML = `<span class="icon">${cat.icon}</span><h2>${cat.name}${typeLabel}</h2><span class="arrow">▼</span>`;
+      head.innerHTML = `<span class="icon">${cat.icon}</span><h2>${cat.name}${labelHtml}</h2><span class="arrow">▼</span>`;
       head.onclick = () => catDiv.classList.toggle("collapsed");
       catDiv.appendChild(head);
 
