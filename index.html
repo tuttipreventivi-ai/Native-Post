@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
@@ -304,7 +304,6 @@
   </div>
 
   <script>
-    // Configurazione dei dati: negative = false significa acquisto (positivo), negative = true significa vendita (negativo)
     const data = [
       { name: "SEMI", icon: "🌱", negative: false, items: [
         { n: "Semi di Papavero", p: 0.04 },
@@ -331,4 +330,196 @@
         { n: "Becco d'Aquila", p: 5.50 },
       ]},
 
-      { name: "CIMELI", icon: "🏺", negative: false, allowMultiple: true
+      { name: "CIMELI", icon: "🏺", negative: false, allowMultiple: true, items: [
+        { n: "Maschere", p: 1.00 },
+        { n: "Chanupa", p: 2.00 },
+        { n: "Copricapo Cerimoniale", p: 2.50 },
+        { n: "Tomahawk", p: 1.50 },
+        { n: "Acchiappasogni", p: 10.00 },
+        { n: "Amuleto", p: 7.00 },
+      ]},
+
+      { name: "MINERALI E ERBE", icon: "⛏️", negative: true, items: [
+        { n: "Ferro", p: 0.10 },
+        { n: "Piombo", p: 0.10 },
+        { n: "Acciaio", p: 0.10 },
+        { n: "Zolfo", p: 0.10 },
+        { n: "Rame", p: 0.10 },
+        { n: "Erbe Varie", p: 0.08 },
+      ]},
+
+      { name: "LEGNAME", icon: "🪵", negative: true, items: [
+        { n: "Legna Normale", p: 0.10 },
+        { n: "Legna Pregiata", p: 0.12 },
+        { n: "Fibra", p: 0.08 },
+      ]},
+
+      { name: "MANUFATTI NATIVI", icon: "🏹", negative: true, items: [
+        { n: "Arco Nativo", p: 90.00 },
+        { n: "Arco Normale", p: 25.00 },
+        { n: "Arco Migliorato", p: 80.00 },
+        { n: "Zaino in Vimini", p: 50.00 },
+        { n: "Zaino in Pelle", p: 60.00 },
+        { n: "Frecce", p: 0.08 },
+        { n: "Frecce Scolatrici", p: 0.50 },
+        { n: "Frecce Avvelenate", p: 1.10 },
+        { n: "Munizioni da Lancio", p: 3.00 },
+        { n: "Bolas", p: 50.00 },
+        { n: "Bolas Hawkmoth", p: 65.00 },
+        { n: "Canoe", p: 120.00 },
+        { n: "Torce", p: 5.00 },
+        { n: "Fuoco da Campo Avanzato", p: 15.00 },
+      ]},
+
+      { name: "CIBI NATIVI", icon: "🍲", negative: true, items: [
+        { n: "Stufato di Cacciagione", p: 3.00 },
+        { n: "Wojapi", p: 1.50 },
+        { n: "Pane di Wojapi", p: 2.50 },
+        { n: "Pane Fritto", p: 2.50 },
+        { n: "Acqua di Tabacco", p: 2.50 },
+        { n: "Decotto di Stramonio", p: 25.00 },
+      ]},
+
+      { name: "EMPORIO", icon: "🏛", negative: true, items: [
+        { n: "Sigari", p: 0.90 },
+        { n: "Sigarettes", p: 0.70 },
+        { n: "Piedi di Porco", p: 1.00 },
+        { n: "Fuoco da Campo", p: 1.00 },
+        { n: "Fuoco da Campo Grande", p: 2.00 },
+        { n: "Fuoco da Campo Avanzato", p: 15.00 },
+        { n: "Sedia di Legno", p: 4.00 },
+        { n: "Sedia", p: 3.00 },
+        { n: "Staccionata", p: 4.00 },
+        { n: "Medicina per Animali", p: 2.50 },
+        { n: "Cassa Piccola", p: 90.00 },
+        { n: "Baule Grande", p: 150.00 },
+      ]},
+    ];
+
+    const container = document.getElementById("categories");
+
+    data.forEach((cat, ci) => {
+      const catDiv = document.createElement("div");
+      catDiv.className = "category collapsed";
+
+      const head = document.createElement("div");
+      head.className = "category-head";
+      const typeLabel = cat.negative 
+        ? ` <span class="cat-type-label negative">— vendita, importo negativo</span>` 
+        : ` <span class="cat-type-label positive">— acquisto, importo positivo</span>`;
+      
+      head.innerHTML = `<span class="icon">${cat.icon}</span><h2>${cat.name}${typeLabel}</h2><span class="arrow">▼</span>`;
+      head.onclick = () => catDiv.classList.toggle("collapsed");
+      catDiv.appendChild(head);
+
+      const body = document.createElement("div");
+      body.className = "category-body";
+
+      const rows = document.createElement("div");
+      rows.className = "rows";
+
+      cat.items.forEach((item, ii) => {
+        const itemGroup = document.createElement("div");
+        itemGroup.className = "item-group";
+
+        const itemHeader = document.createElement("div");
+        itemHeader.className = "item-header";
+        itemHeader.innerHTML = `
+          <span class="item-name">${item.n}</span>
+          ${cat.allowMultiple ? `<button type="button" class="add-qty-btn" onclick="addQtyRow(${ci},${ii})">+ Aggiungi lotto</button>` : ''}
+        `;
+        itemGroup.appendChild(itemHeader);
+
+        const qtyContainer = document.createElement("div");
+        qtyContainer.id = `qty-container-${ci}-${ii}`;
+
+        // Riga iniziale
+        qtyContainer.appendChild(createRowElement(ci, ii, item.p, true));
+        itemGroup.appendChild(qtyContainer);
+
+        rows.appendChild(itemGroup);
+      });
+
+      body.appendChild(rows);
+
+      const subtotal = document.createElement("div");
+      subtotal.className = "category-subtotal";
+      subtotal.innerHTML = `Subtotale: <span id="subtotal-${ci}">$0.00</span>`;
+      body.appendChild(subtotal);
+
+      catDiv.appendChild(body);
+      container.appendChild(catDiv);
+    });
+
+    function createRowElement(ci, ii, defaultPrice, isFirst = false) {
+      const row = document.createElement("div");
+      row.className = "row qty-row";
+
+      row.innerHTML = `
+        <span style="font-size:12px; color:var(--parchment-dim);">${isFirst ? 'Prezzo / Qtà:' : ''}</span>
+        <input type="number" step="0.01" min="0" value="${defaultPrice.toFixed(2)}" class="price-input" oninput="calculate()">
+        <input type="number" min="0" step="1" value="" placeholder="0" class="qty-input" oninput="calculate()">
+        <div style="display:flex; align-items:center; justify-content:flex-end; gap:4px;">
+          <span class="row-total">$0.00</span>
+          ${!isFirst ? `<button type="button" class="remove-qty-btn" onclick="removeQtyRow(this)">✕</button>` : '<span style="width:16px;"></span>'}
+        </div>
+      `;
+      return row;
+    }
+
+    function addQtyRow(ci, ii) {
+      const container = document.getElementById(`qty-container-${ci}-${ii}`);
+      const defaultPrice = data[ci].items[ii].p;
+      container.appendChild(createRowElement(ci, ii, defaultPrice, false));
+      calculate();
+    }
+
+    function removeQtyRow(btn) {
+      const row = btn.closest(".row");
+      row.remove();
+      calculate();
+    }
+
+    function calculate(){
+      let grand = 0;
+
+      data.forEach((cat, ci) => {
+        let subtotal = 0;
+        const sign = cat.negative ? -1 : 1;
+
+        cat.items.forEach((item, ii) => {
+          const container = document.getElementById(`qty-container-${ci}-${ii}`);
+          const rows = container.querySelectorAll(".qty-row");
+
+          rows.forEach(row => {
+            const priceInput = row.querySelector(".price-input");
+            const qtyInput = row.querySelector(".qty-input");
+            const totalSpan = row.querySelector(".row-total");
+
+            const price = parseFloat(priceInput.value) || 0;
+            const qty = parseFloat(qtyInput.value) || 0;
+
+            const rowValue = qty * price;
+            const rowTotal = sign * rowValue;
+
+            totalSpan.textContent = `${rowTotal < 0 ? "-" : ""}$${Math.abs(rowTotal).toFixed(2)}`;
+            subtotal += rowTotal;
+          });
+        });
+
+        document.getElementById(`subtotal-${ci}`).textContent = `${subtotal < 0 ? "-" : ""}$${Math.abs(subtotal).toFixed(2)}`;
+        grand += subtotal;
+      });
+
+      document.getElementById("grandTotal").textContent = `${grand < 0 ? "-" : ""}$${Math.abs(grand).toFixed(2)}`;
+    }
+
+    function resetAll(){
+      document.querySelectorAll(".qty-input").forEach(input => input.value = "");
+      calculate();
+    }
+
+    calculate();
+  </script>
+</body>
+</html>
