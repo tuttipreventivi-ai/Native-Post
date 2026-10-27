@@ -3,291 +3,426 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro del Banco</title>
+  <title>Native Post - Registro del Banco</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rye&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --wood-dark: #241812;
-      --wood-mid: #3a2a1e;
-      --wood-panel: #423123;
-      --parchment: #e9dcbb;
-      --parchment-dim: #c9b992;
-      --brass: #c08a2e;
-      --brass-bright: #e0a83f;
-      --ink-red: #7a3428;
-      --ledger-green: #59714a;
-      --line: rgba(233, 220, 187, 0.14);
+    :root {
+      --bg-gradient-start: #0b132b;
+      --bg-gradient-mid: #1c2541;
+      --bg-gradient-end: #0a192f;
+      
+      --panel-bg: rgba(26, 37, 64, 0.88);
+      --panel-header: #24335c;
+      --border-color: rgba(92, 118, 163, 0.35);
+      
+      --parchment: #e2e8f0;
+      --parchment-dim: #94a3b8;
+      
+      --gold: #f59e0b;
+      --gold-bright: #fbbf24;
+      
+      --ink-red: #ef4444;
+      --ledger-green: #10b981;
+      
+      --western-font: 'Rye', serif;
+      --mono-font: 'Fira Code', monospace;
     }
 
-    *{ box-sizing: border-box; }
+    * { box-sizing: border-box; }
 
-    body{
+    body {
       margin: 0;
-      background: var(--wood-dark);
-      background-image:
-        radial-gradient(circle at 15% 10%, rgba(255,255,255,0.03), transparent 40%),
-        radial-gradient(circle at 85% 90%, rgba(255,255,255,0.02), transparent 45%);
+      background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-mid), var(--bg-gradient-end));
+      background-attachment: fixed;
       color: var(--parchment);
-      font-family: Georgia, 'Times New Roman', serif;
-      padding: 28px 16px 120px;
+      font-family: var(--western-font);
+      padding: 28px 16px 140px;
     }
 
-    .header{
-      max-width: 900px;
-      margin: 0 auto 22px;
-      text-align: left;
-      border-bottom: 2px solid var(--brass);
-      padding-bottom: 14px;
+    .header {
+      max-width: 950px;
+      margin: 0 auto 28px;
+      text-align: center;
+      border-bottom: 3px solid var(--gold);
+      padding-bottom: 18px;
     }
 
-    .header h1{
-      font-size: 30px;
-      letter-spacing: 0.5px;
-      margin: 0 0 4px;
-      color: var(--brass-bright);
-      font-weight: normal;
-      font-variant: small-caps;
+    .header-logo-container {
+      width: 100%;
+      max-width: 820px;
+      margin: 0 auto 12px;
     }
 
-    .header p{
-      margin: 0;
-      color: var(--parchment-dim);
-      font-size: 14px;
-      font-style: italic;
+    .header-logo-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,0.85));
     }
 
-    .wrap{
-      max-width: 900px;
+    .header p {
+      margin: 8px 0 0;
+      color: var(--gold-bright);
+      font-size: 20px;
+      font-family: var(--western-font);
+      letter-spacing: 1px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+    }
+
+    .wrap {
+      max-width: 950px;
       margin: 0 auto;
       display: grid;
-      gap: 18px;
+      gap: 22px;
     }
 
-    .category{
-      background: var(--wood-panel);
-      border: 1px solid var(--line);
-      border-radius: 3px;
+    .category {
+      background: var(--panel-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
       overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
     }
 
-    .category-head{
+    .category-head {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 16px;
-      background: var(--wood-mid);
-      border-bottom: 1px solid var(--line);
+      gap: 14px;
+      padding: 16px 20px;
+      background: linear-gradient(to right, #1e293b, var(--panel-header));
+      border-bottom: 2px solid var(--border-color);
       cursor: pointer;
       user-select: none;
     }
 
-    .category-head .arrow{
+    .category-head .arrow {
       margin-left: auto;
-      color: var(--brass);
-      font-size: 12px;
-      transition: transform 0.2s ease;
+      color: var(--gold);
+      font-size: 18px;
+      transition: transform 0.25s ease;
     }
 
-    .category.collapsed .category-head{
+    .category.collapsed .category-head {
       border-bottom: none;
     }
 
-    .category.collapsed .arrow{
+    .category.collapsed .arrow {
       transform: rotate(-90deg);
     }
 
-    .category-body{
+    .category-body {
       overflow: hidden;
     }
 
-    .category.collapsed .category-body{
+    .category.collapsed .category-body {
       display: none;
     }
 
-    .category-head .icon{ font-size: 18px; }
+    .category-head .icon { font-size: 26px; }
 
-    .category-head h2{
-      font-size: 15px;
+    .category-head h2 {
+      font-size: 22px;
       font-weight: normal;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
       margin: 0;
-      color: var(--parchment);
-      font-variant: small-caps;
+      color: var(--gold-bright);
     }
 
-    .neg-label{
-      text-decoration: underline;
-      text-decoration-color: var(--ink-red);
+    .neg-label {
       color: var(--ink-red);
-      font-size: 12px;
-      font-variant: normal;
-      letter-spacing: 0;
+      font-size: 14px;
+      font-family: var(--mono-font);
+      background: rgba(239, 68, 68, 0.18);
+      padding: 3px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(239, 68, 68, 0.35);
     }
 
-    .pos-label{
-      text-decoration: underline;
-      text-decoration-color: var(--ledger-green);
+    .pos-label {
       color: var(--ledger-green);
-      font-size: 12px;
-      font-variant: normal;
-      letter-spacing: 0;
+      font-size: 14px;
+      font-family: var(--mono-font);
+      background: rgba(16, 185, 129, 0.18);
+      padding: 3px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(16, 185, 129, 0.35);
     }
 
-    .rows{ padding: 4px 0; }
+    .rows { padding: 8px 0; }
 
     .item-group {
-      border-bottom: 1px solid var(--line);
-      padding: 6px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 12px 20px;
     }
     .item-group:last-child { border-bottom: none; }
 
-    .row{
+    .row {
       display: grid;
-      grid-template-columns: 1fr 100px 90px 90px;
+      grid-template-columns: 1fr 110px 100px 120px;
       align-items: center;
-      gap: 10px;
-      padding: 4px 0;
+      gap: 14px;
+      padding: 6px 0;
     }
 
     .item-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
 
-    .item-name{ font-size: 14.5px; font-weight: bold; color: var(--parchment); }
+    .item-name { 
+      font-size: 18px; 
+      color: var(--parchment); 
+      font-family: var(--western-font);
+      letter-spacing: 0.5px;
+    }
 
-    .price-input, .qty-input{
+    .price-input, .qty-input {
       width: 100%;
-      background: var(--wood-dark);
-      border: 1px solid var(--line);
-      color: var(--parchment);
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
+      background: #0f172a;
+      border: 1px solid var(--border-color);
+      color: var(--gold-bright);
+      font-family: var(--mono-font);
+      font-size: 16px;
       text-align: center;
-      padding: 5px 4px;
-      border-radius: 2px;
+      padding: 8px 6px;
+      border-radius: 4px;
     }
     
-    .price-input:focus, .qty-input:focus{
+    .price-input:focus, .qty-input:focus {
       outline: none;
-      border-color: var(--brass);
+      border-color: var(--gold);
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
     }
 
-    .row-total{
-      font-family: 'Courier New', monospace;
+    .row-total {
+      font-family: var(--mono-font);
       text-align: right;
-      font-size: 14.5px;
-      color: var(--brass-bright);
-      min-width: 70px;
+      font-size: 17px;
+      color: var(--gold-bright);
+      min-width: 80px;
     }
 
     .add-qty-btn {
-      background: transparent;
-      border: 1px dashed var(--brass);
-      color: var(--brass-bright);
-      font-size: 11px;
-      padding: 2px 8px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px dashed var(--gold);
+      color: var(--gold-bright);
+      font-size: 13px;
+      font-family: var(--western-font);
+      padding: 5px 12px;
       cursor: pointer;
-      border-radius: 2px;
+      border-radius: 4px;
+      transition: background 0.2s;
     }
     .add-qty-btn:hover {
-      background: rgba(192, 138, 46, 0.2);
+      background: rgba(245, 158, 11, 0.35);
     }
 
     .remove-qty-btn {
       background: transparent;
       border: none;
       color: var(--ink-red);
-      font-size: 14px;
+      font-size: 18px;
       cursor: pointer;
       padding: 0 4px;
+      font-weight: bold;
     }
 
-    .category-subtotal{
+    .category-subtotal {
       display: flex;
       justify-content: flex-end;
-      gap: 10px;
-      padding: 8px 16px;
-      background: rgba(0,0,0,0.15);
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
+      gap: 12px;
+      padding: 14px 20px;
+      background: rgba(0,0,0,0.35);
+      font-family: var(--mono-font);
+      font-size: 17px;
       color: var(--parchment-dim);
+      border-top: 1px solid var(--border-color);
     }
 
-    .footer-bar{
+    .category-subtotal span {
+      color: var(--gold-bright);
+      font-weight: 600;
+    }
+
+    .footer-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: var(--wood-dark);
-      border-top: 2px solid var(--brass);
-      padding: 14px 16px;
+      background: #090e1a;
+      border-top: 3px solid var(--gold);
+      padding: 16px 20px;
       display: flex;
       justify-content: center;
+      box-shadow: 0 -6px 20px rgba(0,0,0,0.8);
+      z-index: 100;
     }
 
-    .footer-inner{
-      max-width: 900px;
+    .footer-inner {
+      max-width: 950px;
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 20px;
+    }
+
+    .grand-total {
+      display: flex;
+      align-items: baseline;
       gap: 16px;
     }
 
-    .grand-total{
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
+    .grand-total .label {
+      font-size: 19px;
+      color: var(--parchment);
+      font-family: var(--western-font);
     }
 
-    .grand-total .label{
-      font-size: 14px;
-      color: var(--parchment-dim);
-      font-variant: small-caps;
-    }
-
-    .grand-total .amount{
-      font-family: 'Courier New', monospace;
-      font-size: 30px;
-      color: var(--brass-bright);
+    .grand-total .amount {
+      font-family: var(--mono-font);
+      font-size: 34px;
+      color: var(--gold-bright);
       font-weight: bold;
     }
 
-    .reset-btn{
-      background: transparent;
+    .reset-btn {
+      background: rgba(239, 68, 68, 0.15);
       border: 1px solid var(--ink-red);
       color: var(--ink-red);
-      padding: 10px 18px;
-      font-family: Georgia, serif;
-      font-size: 14px;
-      font-variant: small-caps;
-      border-radius: 2px;
+      padding: 12px 22px;
+      font-family: var(--western-font);
+      font-size: 16px;
+      border-radius: 4px;
       cursor: pointer;
-      transition: background 0.15s, color 0.15s;
+      transition: background 0.2s, color 0.2s;
     }
-    .reset-btn:hover{
+    .reset-btn:hover {
       background: var(--ink-red);
-      color: var(--parchment);
+      color: #fff;
     }
 
-    @media (max-width: 480px){
-      .row{
-        grid-template-columns: 1fr 80px 65px 65px;
-        gap: 6px;
+    @media (max-width: 600px){
+      .row {
+        grid-template-columns: 1fr 85px 75px 85px;
+        gap: 8px;
       }
-      .item-name{ font-size: 13px; }
-      .header h1{ font-size: 24px; }
-      .grand-total .amount{ font-size: 24px; }
+      .item-name { font-size: 16px; }
+      .grand-total .amount { font-size: 26px; }
+      .header p { font-size: 16px; }
     }
   </style>
 </head>
 <body>
 
   <div class="header">
-    <h1>Registro del Banco</h1>
-    <p>Inserisci le quantità portate dal cliente — i prezzi sono modificabili ed il totale si aggiorna da solo</p>
+    <div class="header-logo-container">
+      <svg class="header-logo-svg" viewBox="0 0 880 140" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Western Gold & Copper Metal Gradients -->
+          <linearGradient id="gold-front" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#fef08a" />
+            <stop offset="35%" stop-color="#f59e0b" />
+            <stop offset="70%" stop-color="#d97706" />
+            <stop offset="100%" stop-color="#78350f" />
+          </linearGradient>
+
+          <linearGradient id="gold-bevel" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fef3c7" />
+            <stop offset="50%" stop-color="#b45309" />
+            <stop offset="100%" stop-color="#451a03" />
+          </linearGradient>
+
+          <linearGradient id="wood-groove" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#3b0764" />
+            <stop offset="100%" stop-color="#0f172a" />
+          </linearGradient>
+
+          <!-- Drop Shadow for 3D Frontier Depth -->
+          <filter id="western-shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="3" dy="6" stdDeviation="4" flood-color="#000000" flood-opacity="0.95" />
+          </filter>
+        </defs>
+
+        <g filter="url(#western-shadow)" text-anchor="middle">
+          <!-- Outer Western Flourish / Decorative Lines -->
+          <path d="M 40,22 L 200,22 M 680,22 L 840,22" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="8 4" />
+          <polygon points="200,22 190,17 190,27" fill="#f59e0b" />
+          <polygon points="680,22 690,17 690,27" fill="#f59e0b" />
+
+          <!-- LAYER 1: Deep 3D Extrusion Layer -->
+          <text x="444" y="98" 
+                font-family="'Rye', 'Eczar', serif" 
+                font-size="82" 
+                font-weight="900" 
+                letter-spacing="9" 
+                fill="#271004" 
+                stroke="#0f0502" 
+                stroke-width="12" 
+                stroke-linejoin="miter">
+            NATIVE POST
+          </text>
+
+          <!-- LAYER 2: Outer Slab-Serif Contour Stroke -->
+          <text x="440" y="94" 
+                font-family="'Rye', 'Eczar', serif" 
+                font-size="82" 
+                font-weight="900" 
+                letter-spacing="9" 
+                fill="none" 
+                stroke="#1e0a02" 
+                stroke-width="8" 
+                stroke-linejoin="miter">
+            NATIVE POST
+          </text>
+
+          <!-- LAYER 3: Gold Bevel Outer Trim -->
+          <text x="440" y="94" 
+                font-family="'Rye', 'Eczar', serif" 
+                font-size="82" 
+                font-weight="900" 
+                letter-spacing="9" 
+                fill="url(#gold-bevel)" 
+                stroke="url(#gold-bevel)" 
+                stroke-width="4" 
+                stroke-linejoin="miter">
+            NATIVE POST
+          </text>
+
+          <!-- LAYER 4: Main Front Gold Face -->
+          <text x="440" y="94" 
+                font-family="'Rye', 'Eczar', serif" 
+                font-size="82" 
+                font-weight="900" 
+                letter-spacing="9" 
+                fill="url(#gold-front)">
+            NATIVE POST
+          </text>
+
+          <!-- LAYER 5: Western Groove Center Line (Chiseled Groove / Inset Line) -->
+          <text x="440" y="94" 
+                font-family="'Rye', 'Eczar', serif" 
+                font-size="82" 
+                font-weight="900" 
+                letter-spacing="9" 
+                fill="none" 
+                stroke="#2a0800" 
+                stroke-width="1.8" 
+                stroke-dasharray="14 3" 
+                stroke-linejoin="round">
+            NATIVE POST
+          </text>
+
+          <!-- Western Diamond / Star Accents -->
+          <path d="M 440,118 L 446,124 L 440,130 L 434,124 Z" fill="#fbbf24" />
+          <line x1="280" y1="124" x2="420" y2="124" stroke="#f59e0b" stroke-width="2" />
+          <line x1="460" y1="124" x2="600" y2="124" stroke="#f59e0b" stroke-width="2" />
+        </g>
+      </svg>
+    </div>
+    <p>Dove la legge può essere un'opinione!!!</p>
   </div>
 
   <div class="wrap" id="categories"></div>
@@ -304,20 +439,60 @@
 
   <script>
     const data = [
-      { name: "SEMI", icon: "🌱", negative: false, items: [
-        { n: "Semi di Papavero", p: 0.04 },
-        { n: "Semi di Salvia del Deserto", p: 0.04 },
-        { n: "Fiore Cardinale", p: 0.04 },
-        { n: "Millefoglie Comune", p: 0.04 },
-        { n: "Glicine", p: 0.04 },
-        { n: "Aloe", p: 0.04 },
-        { n: "Foglie di Coca", p: 0.04 },
-        { n: "Himenoxis Odorata", p: 0.04 },
-        { n: "Lampone Rosso", p: 0.04 },
-        { n: "Ribes Nero", p: 0.04 },
-        { n: "More", p: 0.04 },
-        { n: "Lupino del Texas", p: 0.04 },
-        { n: "Papavero", p: 0.04 },
+      { name: "CONSUMABILI", icon: "📦", negative: false, items: [
+        { n: "Semi", p: 0.12, neg: false },
+        { n: "Sigaretta", p: 0.70, neg: true },
+        { n: "Sigaro", p: 0.90, neg: true },
+        { n: "Pacchetto di Sigarette", p: 7.00, neg: true },
+        { n: "Pacchetto di Sigari", p: 9.00, neg: true },
+        { n: "Medicina Animali", p: 2.50, neg: true },
+      ]},
+
+      { name: "ALIMENTI NATIVI", icon: "🍲", negative: true, items: [
+        { n: "Pane Fritto", p: 2.50 },
+        { n: "Wojapi", p: 1.50 },
+        { n: "Tisana Depurativa", p: 2.50 },
+        { n: "Pane Wojapi", p: 2.50 },
+        { n: "Pesce Essiccato", p: 2.50 },
+        { n: "Acqua di Tabacco", p: 3.00 },
+        { n: "Stufato di Cacciagione", p: 3.00 },
+        { n: "Decotto di Stramonio", p: 25.00 },
+      ]},
+
+      { name: "ARMI & MUNIZIONI", icon: "🏹", negative: true, items: [
+        { n: "Freccia Standard", p: 0.08 },
+        { n: "Freccia Scolatrice", p: 2.00 },
+        { n: "Freccia Avvelenata", p: 3.50 },
+        { n: "Munizioni da Lancio", p: 3.00 },
+        { n: "Bolas", p: 50.00 },
+        { n: "Bolas Hawkmoth", p: 60.00 },
+        { n: "Arco migliorato", p: 90.00 },
+      ]},
+
+      { name: "MANUFATTI & STRUMENTI", icon: "🛠️", negative: true, items: [
+        { n: "Fuoco da Campo", p: 1.00 },
+        { n: "Piede di Porco", p: 1.00 },
+        { n: "Fuoco da Campo Grande", p: 2.00 },
+        { n: "Staccionata", p: 4.00 },
+        { n: "Sedia", p: 5.00 },
+        { n: "Sedia di Legno", p: 5.00 },
+        { n: "Torcia a Mano", p: 5.00 },
+        { n: "Zaino Nativo in Vimini", p: 50.00 },
+        { n: "Zaino Nativo in Pelle", p: 60.00 },
+        { n: "Cassa Piccola", p: 90.00 },
+        { n: "Baule Grande", p: 150.00 },
+        { n: "Canoa", p: 120.00 },
+      ]},
+
+      { name: "CONTRABBANDO", icon: "🦌", negative: false, allowMultiple: true, items: [
+        { n: "Carne di Wapiti", p: 1.50 },
+        { n: "Corna di Alce", p: 1.50 },
+        { n: "Carne di Bisonte", p: 1.50 },
+        { n: "Pelliccia di Bisonte", p: 2.50 },
+        { n: "Pelle di Wapiti", p: 2.50 },
+        { n: "Piuma d'Aquila", p: 3.50 },
+        { n: "Artiglio d'Aquila", p: 3.50 },
+        { n: "Becco d'Aquila", p: 5.50 },
       ]},
 
       { name: "CIMELI", icon: "🏺", negative: false, allowMultiple: true, items: [
@@ -329,16 +504,7 @@
         { n: "Amuleto", p: 7.00 },
       ]},
 
-      { name: "PRODOTTI ILLEGALI", icon: "☠️", negative: false, items: [
-        { n: "Carne di Wapiti", p: 1.10 },
-        { n: "Corna di Alce", p: 1.10 },
-        { n: "Carne di Bisonte", p: 1.10 },
-        { n: "Pelle di Wapiti", p: 2.20 },
-        { n: "Piuma d'Aquila", p: 3.30 },
-        { n: "Becco d'Aquila", p: 5.50 },
-      ]},
-
-      { name: "MINERALI E ERBE", icon: "⛏️", negative: true, items: [
+      { name: "MINERALI", icon: "⛏️", negative: true, allowMultiple: true, items: [
         { n: "Ferro", p: 0.10 },
         { n: "Piombo", p: 0.10 },
         { n: "Acciaio", p: 0.10 },
@@ -347,52 +513,14 @@
         { n: "Erbe Varie", p: 0.08 },
       ]},
 
-      { name: "LEGNAME", icon: "🪵", negative: true, items: [
+      { name: "LEGNAME", icon: "🌲", negative: true, allowMultiple: true, items: [
         { n: "Legna Normale", p: 0.10 },
         { n: "Legna Pregiata", p: 0.12 },
+        { n: "Legno di Abete", p: 0.75 },
+        { n: "Legno di Mogano", p: 0.60 },
+        { n: "Legno Rinforzato", p: 1.00 },
         { n: "Fibra", p: 0.08 },
-      ]},
-
-      { name: "MANUFATTI NATIVI", icon: "🏹", negative: true, items: [
-        { n: "Arco Nativo", p: 90.00 },
-        { n: "Arco Normale", p: 25.00 },
-        { n: "Arco Migliorato", p: 80.00 },
-        { n: "Zaino in Vimini", p: 50.00 },
-        { n: "Zaino in Pelle", p: 60.00 },
-        { n: "Frecce", p: 0.08 },
-        { n: "Frecce Scolatrici", p: 0.50 },
-        { n: "Frecce Avvelenate", p: 1.10 },
-        { n: "Munizioni da Lancio", p: 3.00 },
-        { n: "Bolas", p: 50.00 },
-        { n: "Bolas Hawkmoth", p: 65.00 },
-        { n: "Canoe", p: 120.00 },
-        { n: "Torce", p: 5.00 },
-        { n: "Fuoco da Campo Avanzato", p: 15.00 },
-      ]},
-
-      { name: "CIBI NATIVI", icon: "🍲", negative: true, items: [
-        { n: "Stufato di Cacciagione", p: 3.00 },
-        { n: "Wojapi", p: 1.50 },
-        { n: "Pane di Wojapi", p: 2.50 },
-        { n: "Pane Fritto", p: 2.50 },
-        { n: "Acqua di Tabacco", p: 2.50 },
-        { n: "Decotto di Stramonio", p: 25.00 },
-      ]},
-
-      { name: "Emporio", icon: "🏛", negative: true, items: [
-        { n: "Sigari", p: 0.90 },
-        { n: "Sigarettes", p: 0.70 },
-        { n: "Piedi di Porco", p: 1.00 },
-        { n: "Fuoco da Campo", p: 1.00 },
-        { n: "Fuoco da Campo Grande", p: 2.00 },
-        { n: "Fuoco da Campo Avanzato", p: 15.00 },
-        { n: "Sedia di Legno", p: 4.00 },
-        { n: "Sedia", p: 3.00 },
-        { n: "Staccionata", p: 4.00 },
-        { n: "Medicina per Animali", p: 2.50 },
-        { n: "Cassa Piccola", p: 90.00 },
-        { n: "Baule Grande", p: 150.00 },
-      ]},
+      ]}
     ];
 
     const container = document.getElementById("categories");
@@ -403,11 +531,12 @@
 
       const head = document.createElement("div");
       head.className = "category-head";
-      const labelHtml = cat.negative 
-        ? ` <span class="neg-label">— vendita, importo negativo</span>` 
-        : ` <span class="pos-label">— acquisto, importo positivo</span>`;
       
-      head.innerHTML = `<span class="icon">${cat.icon}</span><h2>${cat.name}${labelHtml}</h2><span class="arrow">▼</span>`;
+      head.innerHTML = `
+        <span class="icon">${cat.icon}</span>
+        <h2>${cat.name}</h2>
+        <span class="arrow">▼</span>
+      `;
       head.onclick = () => catDiv.classList.toggle("collapsed");
       catDiv.appendChild(head);
 
@@ -423,8 +552,17 @@
 
         const itemHeader = document.createElement("div");
         itemHeader.className = "item-header";
+        
+        const isItemNegative = item.hasOwnProperty('neg') ? item.neg : cat.negative;
+        const badgeHtml = isItemNegative 
+          ? `<span class="neg-label">Vendita (-)</span>` 
+          : `<span class="pos-label">Acquisto (+)</span>`;
+
         itemHeader.innerHTML = `
-          <span class="item-name">${item.n}</span>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span class="item-name">${item.n}</span>
+            ${badgeHtml}
+          </div>
           ${cat.allowMultiple ? `<button type="button" class="add-qty-btn" onclick="addQtyRow(${ci},${ii})">+ Aggiungi lotto</button>` : ''}
         `;
         itemGroup.appendChild(itemHeader);
@@ -432,8 +570,7 @@
         const qtyContainer = document.createElement("div");
         qtyContainer.id = `qty-container-${ci}-${ii}`;
 
-        // Riga iniziale
-        qtyContainer.appendChild(createRowElement(ci, ii, item.p, true));
+        qtyContainer.appendChild(createRowElement(ci, ii, item.p, true, isItemNegative));
         itemGroup.appendChild(qtyContainer);
 
         rows.appendChild(itemGroup);
@@ -450,17 +587,18 @@
       container.appendChild(catDiv);
     });
 
-    function createRowElement(ci, ii, defaultPrice, isFirst = false) {
+    function createRowElement(ci, ii, defaultPrice, isFirst = false, isNegative = false) {
       const row = document.createElement("div");
       row.className = "row qty-row";
+      row.dataset.negative = isNegative ? "true" : "false";
 
       row.innerHTML = `
-        <span style="font-size:12px; color:var(--parchment-dim);">${isFirst ? 'Prezzo / Qtà:' : ''}</span>
+        <span style="font-size:14px; color:var(--parchment-dim); font-family:var(--mono-font);">${isFirst ? 'Prezzo / Qtà:' : ''}</span>
         <input type="number" step="0.01" min="0" value="${defaultPrice.toFixed(2)}" class="price-input" oninput="calculate()">
         <input type="number" min="0" step="1" value="" placeholder="0" class="qty-input" oninput="calculate()">
-        <div style="display:flex; align-items:center; justify-content:flex-end; gap:4px;">
+        <div style="display:flex; align-items:center; justify-content:flex-end; gap:6px;">
           <span class="row-total">$0.00</span>
-          ${!isFirst ? `<button type="button" class="remove-qty-btn" onclick="removeQtyRow(this)">✕</button>` : '<span style="width:16px;"></span>'}
+          ${!isFirst ? `<button type="button" class="remove-qty-btn" onclick="removeQtyRow(this)">✕</button>` : '<span style="width:20px;"></span>'}
         </div>
       `;
       return row;
@@ -469,7 +607,10 @@
     function addQtyRow(ci, ii) {
       const container = document.getElementById(`qty-container-${ci}-${ii}`);
       const defaultPrice = data[ci].items[ii].p;
-      container.appendChild(createRowElement(ci, ii, defaultPrice, false));
+      const cat = data[ci];
+      const item = cat.items[ii];
+      const isItemNegative = item.hasOwnProperty('neg') ? item.neg : cat.negative;
+      container.appendChild(createRowElement(ci, ii, defaultPrice, false, isItemNegative));
       calculate();
     }
 
@@ -484,7 +625,6 @@
 
       data.forEach((cat, ci) => {
         let subtotal = 0;
-        const sign = cat.negative ? -1 : 1;
 
         cat.items.forEach((item, ii) => {
           const container = document.getElementById(`qty-container-${ci}-${ii}`);
@@ -494,6 +634,8 @@
             const priceInput = row.querySelector(".price-input");
             const qtyInput = row.querySelector(".qty-input");
             const totalSpan = row.querySelector(".row-total");
+            const isNegative = row.dataset.negative === "true";
+            const sign = isNegative ? -1 : 1;
 
             const price = parseFloat(priceInput.value) || 0;
             const qty = parseFloat(qtyInput.value) || 0;
