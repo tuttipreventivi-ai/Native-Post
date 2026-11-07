@@ -403,9 +403,8 @@
       ]},
 
       { name: "MANUFATTI & STRUMENTI", icon: "🛠️", negative: true, items: [
-        { n: "Fuoco da Campo", p: 1.00 },
         { n: "Piede di Porco", p: 1.00 },
-        { n: "Fuoco da Campo Grande", p: 2.00 },
+        { n: "Fuoco da Campo Avanzato", p: 15.00, neg: true },
         { n: "Staccionata", p: 4.00 },
         { n: "Sedia", p: 5.00 },
         { n: "Sedia di Legno", p: 5.00 },
@@ -610,7 +609,6 @@
             const qty = parseFloat(qtyInput.value) || 0;
 
             if (isHydra) {
-              // 1 Hydra ogni 20 pezzi
               const hydraCount = (qty / 20) * price;
               const rowTotal = sign * hydraCount;
 
